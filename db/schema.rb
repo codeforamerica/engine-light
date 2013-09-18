@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20130918165755) do
 
   create_table "web_applications", force: true do |t|
     t.string   "name"
+    t.string   "status_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

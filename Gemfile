@@ -19,6 +19,7 @@ gem 'unicorn'
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl'
+  gem 'fakeweb'
 end
 
 # Use debugger
