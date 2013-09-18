@@ -4,5 +4,7 @@ class CreateWebApplications < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
+
+    add_index :web_applications, :name
   end
 end

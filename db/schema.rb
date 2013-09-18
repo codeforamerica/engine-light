@@ -22,4 +22,6 @@ ActiveRecord::Schema.define(version: 20130918165755) do
     t.datetime "updated_at"
   end
 
+  add_index "web_applications", ["name"], name: "index_web_applications_on_name", using: :btree
+
 end

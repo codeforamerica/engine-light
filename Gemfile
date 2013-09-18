@@ -16,7 +16,10 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
-gem 'rspec-rails', group: :test
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl'
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
