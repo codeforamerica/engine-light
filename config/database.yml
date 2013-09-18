@@ -6,6 +6,7 @@
 development:
   adapter: postgresql
   database: engine-light_development
+  encoding: unicode
   username: postgres
   password:
   host: localhost
@@ -16,11 +17,14 @@ development:
 test:
   adapter: postgresql
   database: engine-light_test
+  encoding: unicode
   username: postgres
   password:
+  host: localhost
 
 production:
   adapter: postgresql
   database: engine-light_production
+  encoding: unicode
   username: postgres
   password:
