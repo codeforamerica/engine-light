@@ -5,7 +5,6 @@ module Requester
   def get(uri_string)
     uri = URI.parse(uri_string)
     response = Net::HTTP.get_response(uri)
-    puts response.inspect
     
     case response
     when Net::HTTPRedirection
