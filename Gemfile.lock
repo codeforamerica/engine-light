@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/norman/friendly_id.git
+  revision: 46e4c18fe819f8748e1fbf6b86443c2365cd3a32
+  specs:
+    friendly_id (5.0.0.rc2)
+      activerecord (~> 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -112,6 +119,7 @@ PLATFORMS
 DEPENDENCIES
   factory_girl
   fakeweb
+  friendly_id!
   pg
   rails (= 4.0.0)
   rspec-rails

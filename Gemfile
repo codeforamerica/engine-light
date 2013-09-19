@@ -7,6 +7,8 @@ gem 'rails', '4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 
 gem 'pg'
+# Released version is not compatible with rails 4, so have to pull from github :/
+gem 'friendly_id', github: 'norman/friendly_id'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

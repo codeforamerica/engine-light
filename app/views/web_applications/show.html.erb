@@ -1,1 +1,8 @@
-<p>omg</p>
+<div id="app_status">
+  <h1><%= @web_app.name %></h1>
+  <% if @web_app_available %>
+    <%= image_tag("green_icon.png", alt: 'green') %>
+  <% else %>
+    <%= image_tag("red_icon.png", alt: 'red') %>
+  <% end %>
+</div>
