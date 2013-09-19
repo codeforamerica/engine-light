@@ -1,24 +1,17 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
+# Heroku overwrites this file when app is deployed
 development:
   adapter: postgresql
   database: engine-light_development
   encoding: unicode
-  username: postgres
+  username: engine_light
   password:
   host: localhost
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   adapter: postgresql
   database: engine-light_test
   encoding: unicode
-  username: postgres
+  username: engine_light
   password:
   host: localhost
 
@@ -26,5 +19,5 @@ production:
   adapter: postgresql
   database: engine-light_production
   encoding: unicode
-  username: postgres
-  password:
+  username: engine_light
+  password: password
