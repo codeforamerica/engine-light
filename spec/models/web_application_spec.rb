@@ -9,7 +9,7 @@ describe WebApplication do
 
     it "returns a hash of status information" do
       web_app = FactoryGirl.create(:web_application)
-      web_app.get_status["status"].should == "ok"
+      web_app.get_status.should == "ok"
     end
   end
 end

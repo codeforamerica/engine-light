@@ -1,6 +1,14 @@
 class WebApplicationsController < ApplicationController
   def show
-    @web_app = WebApplication.friendly.find(params[:id]) || raise_not_found
-    @web_app_available = @web_app.get_status == "ok" ? true : false
+    begin
+      @web_application = WebApplication.friendly.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      raise_not_found
+    end
+    @web_app_available = @web_application.get_status == "ok" ? true : false
+  end
+
+  def index
+    @web_applications = WebApplication.all
   end
 end
