@@ -6,6 +6,12 @@ gem 'rails', '4.0.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolink
+gem 'turbolinks'
+
 gem 'pg'
 # Released version is not compatible with rails 4, so have to pull from github :/
 gem 'friendly_id', github: 'norman/friendly_id'
@@ -26,3 +32,7 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+group :production do
+  gem 'rails_12factor'
+end
