@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <th>Application Name</th>
+    <th>Status Endpoint</th>
+  </tr>
+  <tr>
+  <% @web_applications.each do |web_app| %>
+    <td><%= web_app.name %></td>
+    <td><%= web_app.status_url %></td>
+  <% end %>  
+  </tr>
+</table>
