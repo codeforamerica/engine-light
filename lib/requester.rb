@@ -17,4 +17,15 @@ module Requester
       response.error!
     end
   end
+
+  def post(uri_string, params=[])
+    uri = URI(uri_string)
+    http = Net::HTTP.new(uri.host, uri.port)
+    response = Net::HTTP.post_form(uri, params)
+    if response.is_a? Net::HTTPOK
+      JSON.parse response.body
+    else
+      response.error!
+    end
+  end
 end
