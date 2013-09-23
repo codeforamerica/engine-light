@@ -11,3 +11,4 @@
 /log/*.log
 /tmp
 .env
+public/assets/*.*
