@@ -1,4 +1,6 @@
 class WebApplicationsController < ApplicationController
+  before_action :require_login
+
   def show
     begin
       @web_application = WebApplication.friendly.find(params[:id])

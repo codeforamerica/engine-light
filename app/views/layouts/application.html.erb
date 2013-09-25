@@ -3,13 +3,33 @@
 <head>
   <title>Engine Light</title>
   <%= stylesheet_link_tag "application" %>
+  <script src="https://login.persona.org/include.js"></script>
+  <script type="text/javascript">
+    var currentUser = <% if session[:email] %>'<%= session[:email] %>'<% else %>null<% end %>;
+  </script>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <script src="https://login.persona.org/include.js"></script>
 </head>
 <body>
 
 <%= yield %>
+
+<form>
+  <input type="button" id="signin" value="Sign in">
+  <input type="button" id="signout" value="Sign out">
+</form>
+
+<script type="text/javascript">
+  var signinLink = document.getElementById('signin');
+  if (signinLink) {
+    signinLink.onclick = function() { navigator.id.request(); };
+  }
+
+  var signoutLink = document.getElementById('signout');
+  if (signoutLink) {
+    signoutLink.onclick = function() { navigator.id.logout(); };
+  }
+</script>
 
 </body>
 </html>

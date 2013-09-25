@@ -4,12 +4,8 @@ EngineLight::Application.routes.draw do
 
   resources :web_applications
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  post 'persona/login' => 'persona#login'
+  post 'persona/logout' => 'persona#logout'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  root 'welcome#index'
 end

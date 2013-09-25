@@ -17,4 +17,14 @@ class ApplicationController < ActionController::Base
       f.html{ render "public/404.html", :status => 404 }
     end
   end
+
+  def current_user
+    User.find_by_email(session[:email])
+  end
+
+  def require_login
+    if current_user.nil?
+      redirect_to root_url
+    end
+  end
 end
