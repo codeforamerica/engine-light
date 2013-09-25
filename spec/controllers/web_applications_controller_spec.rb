@@ -56,4 +56,25 @@ describe WebApplicationsController do
       response.should be_success
     end
   end
+
+  describe "#create" do
+    it "creates a web application belonging to the current user" do
+      current_user = FactoryGirl.create(:user)
+      controller.stub(:current_user).and_return(current_user)
+      expect {
+        post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
+                       "user_id" => current_user.id}
+      }.to change(WebApplication, :count).by(1)
+    end
+
+    it "raises if a user other than the current user tries to create a web app" do
+      user = FactoryGirl.create(:user)
+      current_user = FactoryGirl.create(:user)
+      controller.stub(:current_user).and_return(current_user)
+      expect {
+        post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
+                       "user_id" => user.id}
+      }.to raise_error
+    end
+  end
 end

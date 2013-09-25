@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from ActionController::RoutingError, with: :render_not_found
+    rescue_from User::NotAuthorized, with: :render_unprocessable_entity
   end
 
   def raise_not_found
@@ -15,6 +16,12 @@ class ApplicationController < ActionController::Base
   def render_not_found(e)
     respond_to do |f|
       f.html{ render "public/404.html", :status => 404 }
+    end
+  end
+
+  def render_unprocessable_entity(e)
+    respond_to do |f|
+      f.html{ render "public/422.html", :status => 422 }
     end
   end
 

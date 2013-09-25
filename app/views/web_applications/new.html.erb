@@ -1,0 +1,21 @@
+<h2>Add New Web Application</h2>
+
+<%= form_for([:user, @web_application]) do |f| %>
+  <table>
+  <tr>
+    <td>
+      <%= f.label :name %><%= f.text_field :name %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :status_url %><%= f.text_field :status_url %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.submit 'Add Web Application' %>
+    </td>
+  </tr>
+  </table>
+<% end %>
