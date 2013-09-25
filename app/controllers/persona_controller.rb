@@ -7,8 +7,8 @@ class PersonaController < ApplicationController
       email = get_identity(assertion)
       session[:email] = email
       if email.present? && check_for_cfa_email(email)
-        User.find_or_create_by(email: email)
-        render json: {location: web_applications_url}
+        user = User.find_or_create_by(email: email)
+        render json: {location: user_web_applications_url(user)}
       else
         render json: {}, status: :unauthorized
       end

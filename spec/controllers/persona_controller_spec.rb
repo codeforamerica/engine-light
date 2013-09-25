@@ -13,8 +13,9 @@ describe PersonaController do
       end
 
       it "renders json with a redirect location" do
+        user = FactoryGirl.create(:user, email: "erica@cfa.org")
         xhr :post, :login
-        response.body.should == {location: web_applications_url}.to_json
+        response.body.should == {location: user_web_applications_url(user)}.to_json
       end
 
       it "should create a user" do
