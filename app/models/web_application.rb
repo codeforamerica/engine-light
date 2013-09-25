@@ -3,6 +3,7 @@ class WebApplication < ActiveRecord::Base
   extend FriendlyId
 
   validates_uniqueness_of :name
+  belongs_to :user
   friendly_id :name, use: :slugged
 
   def get_status
