@@ -1,7 +1,7 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
   before_action :check_user
-  skip_before_action :check_user, except: [:create]
+  skip_before_action :check_user, except: [:create, :update]
 
   def show
     begin
@@ -22,6 +22,7 @@ class WebApplicationsController < ApplicationController
   end
 
   def new
+    @current_user = current_user
     @web_application = WebApplication.new
   end
 
@@ -30,7 +31,23 @@ class WebApplicationsController < ApplicationController
     if @web_application.save
       redirect_to user_web_applications_path(current_user)
     else
+      flash.now.alert = "The web application cannot not be added. One or more values entered are invalid."
       render :new
+    end
+  end
+
+  def edit
+    @current_user = current_user
+    @web_application = @current_user.web_applications.friendly.find(params[:id])
+  end
+
+  def update
+    @web_application = current_user.web_applications.friendly.find(params[:id])
+    if @web_application.update_attributes(web_application_params)
+      redirect_to user_web_applications_path(current_user)
+    else
+      flash.now.alert = "The web application cannot not be updated. One or more values entered are invalid."
+      render :edit
     end
   end
 

@@ -58,23 +58,66 @@ describe WebApplicationsController do
   end
 
   describe "#create" do
+    let(:current_user) { FactoryGirl.create(:user) }
+    before             {controller.stub(:current_user).and_return(current_user) }
+
     it "creates a web application belonging to the current user" do
-      current_user = FactoryGirl.create(:user)
-      controller.stub(:current_user).and_return(current_user)
       expect {
         post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
                        "user_id" => current_user.id}
       }.to change(WebApplication, :count).by(1)
     end
 
+    it "redirects to the user's web applications index page" do
+      post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
+                     "user_id" => current_user.id}
+      response.should be_redirect
+    end
+
+    it "renders the new page and shows a flash message when attributes are missing" do
+      post :create, {"web_application" => {"name" => "Test Web App"}, "user_id" => current_user.id}
+      response.should render_template(:new)
+      flash.now[:alert].should_not be_nil
+    end
+
     it "raises if a user other than the current user tries to create a web app" do
       user = FactoryGirl.create(:user)
-      current_user = FactoryGirl.create(:user)
-      controller.stub(:current_user).and_return(current_user)
       expect {
         post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
                        "user_id" => user.id}
       }.to raise_error
+    end
+  end
+
+  describe "#update" do
+    let(:current_user)    { FactoryGirl.create(:user) }
+    let(:web_application) { FactoryGirl.create(:web_application, user: current_user) }
+    before                {controller.stub(:current_user).and_return(current_user) }
+
+    it "updates a web application belonging to the current user" do
+      put :update, {"web_application" => {"name" => "Meow Test Web App", "status_url" => "http://www.example.com"},
+                      "user_id" => current_user.id, "id" => web_application.slug}
+      web_application.reload.name.should == "Meow Test Web App"
+    end
+
+    it "redirects to the user's web applications index page" do
+      put :update, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
+                    "user_id" => current_user.id, "id" => web_application.slug}
+      response.should be_redirect
+    end
+
+    it "renders the new page and shows a flash message when attributes are invalid" do
+      put :update, {"web_application" => {"name" => ""}, "user_id" => current_user.id, "id" => web_application.slug}
+      response.should render_template(:edit)
+      flash.now[:alert].should_not be_nil
+    end
+
+    it "raises if a user other than the current user tries to update a web app" do
+      user = FactoryGirl.create(:user)
+      expect {
+      put :update, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
+                    "user_id" => user.id, "id" => web_application.slug}
+      x}.to raise_error
     end
   end
 end
