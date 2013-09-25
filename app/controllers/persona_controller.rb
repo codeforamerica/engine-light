@@ -9,7 +9,11 @@ class PersonaController < ApplicationController
       User.find_or_create_by(email: email)
     end
     if request.xhr?
-      render json: {location: web_applications_url}
+      if check_for_cfa_email(email)
+        render json: {location: web_applications_url}
+      else
+        render json: {}, status: :unauthorized
+      end
     end
   end
 
@@ -25,5 +29,9 @@ class PersonaController < ApplicationController
     request_params = {assertion: assertion, audience: request.url}
     response = post(uri, request_params)
     email = response.try(:[], "email")
+  end
+
+  def check_for_cfa_email(email)
+    email =~ /@(cfa|codeforamerica)\.org$/
   end
 end

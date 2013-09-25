@@ -2,17 +2,27 @@ require 'spec_helper'
 
 describe PersonaController do
   describe "#login" do
-    before do
-      controller.stub(:get_identity).and_return("erica@cfa.org")
-      xhr :post, :login
+    context "with a cfa email address" do
+      before do
+        controller.stub(:get_identity).and_return("erica@cfa.org")
+        xhr :post, :login
+      end
+
+      it "sets a session variable when an identity is found" do
+        session[:email].should == "erica@cfa.org"
+      end
+
+      it "renders json with a redirect location" do
+        response.body.should == {location: web_applications_url}.to_json
+      end
     end
 
-    it "sets a session variable when an identity is found" do
-      session[:email].should == "erica@cfa.org"
-    end
-  
-    it "renders json with a redirect location" do
-      response.body.should == {location: web_applications_url}.to_json
+    context "with a non-cfa address" do
+      it "responds with an unauthorized status" do
+        controller.stub(:get_identity).and_return("erica@hellokitty.com")
+        xhr :post, :login
+        response.code.should == "401"
+      end
     end
   end
 
