@@ -2,14 +2,12 @@ class PersonaController < ApplicationController
   include Requester
 
   def login
-    assertion = params["assertion"]
-    email = get_identity(assertion)
-    if email.present?
-      session[:email] = email
-      User.find_or_create_by(email: email)
-    end
     if request.xhr?
-      if check_for_cfa_email(email)
+      assertion = params["assertion"]
+      email = get_identity(assertion)
+      session[:email] = email
+      if email.present? && check_for_cfa_email(email)
+        User.find_or_create_by(email: email)
         render json: {location: web_applications_url}
       else
         render json: {}, status: :unauthorized

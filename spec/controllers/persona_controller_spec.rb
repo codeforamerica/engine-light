@@ -5,23 +5,35 @@ describe PersonaController do
     context "with a cfa email address" do
       before do
         controller.stub(:get_identity).and_return("erica@cfa.org")
-        xhr :post, :login
       end
 
       it "sets a session variable when an identity is found" do
+        xhr :post, :login
         session[:email].should == "erica@cfa.org"
       end
 
       it "renders json with a redirect location" do
+        xhr :post, :login
         response.body.should == {location: web_applications_url}.to_json
+      end
+
+      it "should create a user" do
+        expect { xhr :post, :login }.to change(User, :count).by(1)
       end
     end
 
     context "with a non-cfa address" do
-      it "responds with an unauthorized status" do
+      before do
         controller.stub(:get_identity).and_return("erica@hellokitty.com")
+      end
+
+      it "responds with an unauthorized status" do
         xhr :post, :login
         response.code.should == "401"
+      end
+
+      it "should not create a user" do
+        expect { xhr :post, :login }.to_not change(User, :count)
       end
     end
   end
