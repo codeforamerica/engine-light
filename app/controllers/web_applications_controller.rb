@@ -11,6 +11,11 @@ class WebApplicationsController < ApplicationController
   end
 
   def index
-    @web_applications = WebApplication.all
+    user_id = params[:user_id]
+    if user_id.present?
+      @web_applications = WebApplication.where('user_id = ?', user_id).all
+    else
+      @web_applications = WebApplication.all
+    end
   end
 end
