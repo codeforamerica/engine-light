@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag "application" %>
   <script src="https://login.persona.org/include.js"></script>
   <script type="text/javascript">
-    var currentUser = '<%= session["email"] %>';
+    var currentUser = <% if session[:email] %>'<%= session[:email] %>'<% else %>null<% end %>;
   </script>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>

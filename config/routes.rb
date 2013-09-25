@@ -6,4 +6,6 @@ EngineLight::Application.routes.draw do
 
   post 'persona/login' => 'persona#login'
   post 'persona/logout' => 'persona#logout'
+
+  root 'welcome#index'
 end

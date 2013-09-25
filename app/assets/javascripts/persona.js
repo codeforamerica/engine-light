@@ -6,9 +6,13 @@ navigator.id.watch({
     // 2. Update your UI.
     $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
       type: 'POST',
-      url: '/persona/login', // This is a URL on your website.
+      url: '/persona/login',
       data: {assertion: assertion},
-      success: function(res, status, xhr) { window.location.reload(); },
+      success: function(response_data) {
+        if (response_data.location) {
+          window.location.href = response_data.location;
+        }
+      },
       error: function(xhr, status, err) {
         navigator.id.logout();
         alert("Login failure: " + err);
@@ -22,8 +26,12 @@ navigator.id.watch({
     // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
     $.ajax({
       type: 'POST',
-      url: '/persona/logout', // This is a URL on your website.
-      success: function(res, status, xhr) { window.location.reload(); },
+      url: '/persona/logout',
+      success: function(response_data) {
+        if (response_data.location) {
+          window.location.href = response_data.location;
+        }
+      },
       error: function(xhr, status, err) { alert("Logout failure: " + err); }
     });
   }
