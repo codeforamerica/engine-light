@@ -1,10 +1,9 @@
 require 'spec_helper'
 
 describe WebApplicationsController do
-  before do 
-    FactoryGirl.create(:user, email: "erica@cfa.org") 
-    session[:email] = "erica@cfa.org"
-  end
+  let(:web_app_owner) { FactoryGirl.create(:user, email: "erica@cfa.org") }
+  let(:web_app)       { FactoryGirl.create(:web_application, name: "monkey", user: web_app_owner) }
+  before              { session[:email] = "erica@cfa.org" }
 
   shared_examples "an action that requires login" do
     it "successfully renders the page if the user is logged in" do
@@ -20,39 +19,49 @@ describe WebApplicationsController do
     end
   end
 
+  shared_examples "an action that only allows access to the web app owners" do
+    it "redirects when the current user does not own the web application" do
+      user = FactoryGirl.create(:user)
+      controller.stub(:current_user).and_return(user)
+      expect {
+      get action, params
+      }.to raise_error
+    end
+  end
+
   describe "#show" do
     let(:action)  { :show }
-    let(:web_app) { FactoryGirl.create(:web_application, name: "monkey") }
-    let(:params)  { {id: web_app.name} }
- 
+    let(:params)  { {"id" => web_app.name, "user_id" => web_app_owner.id } }
+
     it_behaves_like "an action that requires login"
+    it_behaves_like "an action that only allows access to the web app owners"
 
     before do
       body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
       FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", body: body_string)
-      session[:email] = "erica@cfa.org"
     end
 
     it "returns ok with a valid application" do
-      get action, id: web_app.name
+      get action, params
       response.should be_success
     end
 
     it "throws an exception when passed a non-existent application" do
       expect{
-        get action, id: "pretend_monkey"
+        get action, id: "pretend_monkey", user_id: web_app_owner.id
       }.to raise_error(ActionController::RoutingError)
     end
   end
 
   describe "#index" do
     let(:action) { :index }
-    let(:params)  { {} }
+    let(:params) { {"user_id" => web_app_owner.id} }
 
     it_behaves_like "an action that requires login"
+    it_behaves_like "an action that only allows access to the web app owners"
 
     it "returns ok" do
-      get action
+      get action, params
       response.should be_success
     end
   end
@@ -117,7 +126,7 @@ describe WebApplicationsController do
       expect {
       put :update, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
                     "user_id" => user.id, "id" => web_application.slug}
-      x}.to raise_error
+      }.to raise_error
     end
   end
 end

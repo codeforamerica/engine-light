@@ -1,7 +1,6 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
   before_action :check_user
-  skip_before_action :check_user, except: [:create, :update]
 
   def show
     begin
@@ -15,7 +14,7 @@ class WebApplicationsController < ApplicationController
   def index
     user_id = params[:user_id]
     if user_id.present?
-      @web_applications = WebApplication.where('user_id = ?', user_id).all
+      @web_applications = WebApplication.where('user_id = ?', user_id)
     else
       @web_applications = WebApplication.all
     end
