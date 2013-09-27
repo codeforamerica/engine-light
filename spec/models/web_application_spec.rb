@@ -15,4 +15,13 @@ describe WebApplication do
       expect { web_app.get_status }.to raise_error
     end
   end
+
+  describe "validations" do
+    it "does not allow a user to belong to the web app more than once" do
+      user = FactoryGirl.create(:user)
+      web_application = FactoryGirl.create(:web_application)
+      web_application.update_attributes(users: [user])
+      expect { web_application.users << user }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
 end

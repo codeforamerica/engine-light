@@ -59,21 +59,32 @@ describe WebApplicationsController do
 
   describe "#create" do
     let(:current_user) { FactoryGirl.create(:user) }
-    before             {controller.stub(:current_user).and_return(current_user) }
+    before             { controller.stub(:current_user).and_return(current_user) }
+    let(:params)       { {"web_application" => {"name" => "Test Web App",
+                                               "status_url" => "http://www.example.com",
+                                               "user" => {"ids" => [""]}}} }
 
     it "creates a web application belonging to the current user" do
       expect {
-        post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"}}
-      }.to change(WebApplication, :count).by(1)
+        post :create, params
+      }.to change(current_user.web_applications, :count).by(1)
+    end
+
+    it "creates a web application belonging to more than one user" do
+      another_user = FactoryGirl.create(:user)
+      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      post :create, params.deep_merge(users_hash)
+      web_application = WebApplication.find_by_name("Test Web App")
+      web_application.users.count.should == 2
     end
 
     it "redirects to the user's web applications index page" do
-      post :create, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"}}
+      post :create, params
       response.should be_redirect
     end
 
     it "renders the new page and shows a flash message when attributes are missing" do
-      post :create, {"web_application" => {"name" => "Test Web App"}}
+      post :create, {"web_application" => {"name" => "Test Web App", "user" => {"ids" => [""]}}}
       response.should render_template(:new)
       flash.now[:alert].should_not be_nil
     end
@@ -82,25 +93,43 @@ describe WebApplicationsController do
   describe "#update" do
     let(:current_user)    { FactoryGirl.create(:user) }
     let(:web_application) { FactoryGirl.create(:web_application) }
+    let(:params)          { {"web_application" => {"name" => "Meow Test Web App", 
+                                                   "status_url" => "http://www.example.com", 
+                                                   "user" => {"ids" => [""]}},
+                                                   "id" => web_application.slug} }
+
     before do
       controller.stub(:current_user).and_return(current_user)
       web_application.update_attributes(users: [current_user])
     end
 
     it "updates a web application belonging to the current user" do
-      put :update, {"web_application" => {"name" => "Meow Test Web App", "status_url" => "http://www.example.com"},
-                    "id" => web_application.slug}
+      put :update, params
       web_application.reload.name.should == "Meow Test Web App"
     end
 
+    it "updates a web application to have more than one user" do
+      another_user = FactoryGirl.create(:user)
+      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      put :update, params.deep_merge(users_hash)
+      web_application.reload.users.should == [current_user, another_user]
+    end
+
+    it "does not re-assign a user to the web application" do
+      another_user = FactoryGirl.create(:user)
+      web_application.users << another_user
+      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      put :update, params.deep_merge(users_hash)
+      web_application.reload.users.should == [current_user, another_user]
+    end
+
     it "redirects to the user's web applications index page" do
-      put :update, {"web_application" => {"name" => "Test Web App", "status_url" => "http://www.example.com"},
-                    "id" => web_application.slug}
+      put :update, params
       response.should be_redirect
     end
 
-    it "renders the new page and shows a flash message when attributes are invalid" do
-      put :update, {"web_application" => {"name" => ""}, "id" => web_application.slug}
+    it "renders the edit page and shows a flash message when attributes are invalid" do
+      put :update, {"web_application" => {"name" => "", "user" => {"ids" => [""]}}, "id" => web_application.slug}
       response.should render_template(:edit)
       flash.now[:alert].should_not be_nil
     end
