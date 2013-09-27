@@ -2,9 +2,9 @@ class WebApplication < ActiveRecord::Base
   include Requester
   extend FriendlyId
 
-  validates_presence_of :name, :status_url, :user
+  validates_presence_of :name, :status_url
   validates_uniqueness_of :name
-  belongs_to :user
+  has_and_belongs_to_many :users, autosave: true
   friendly_id :name, use: :slugged
 
   def get_status

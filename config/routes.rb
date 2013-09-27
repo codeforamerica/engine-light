@@ -4,10 +4,6 @@ EngineLight::Application.routes.draw do
 
   resources :web_applications
 
-  resources :users do
-    resources :web_applications
-  end
-
   post 'persona/login' => 'persona#login'
   post 'persona/logout' => 'persona#logout'
 

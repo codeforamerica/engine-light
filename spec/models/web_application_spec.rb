@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe WebApplication do
   describe "#get_status" do
-    let(:web_app) { FactoryGirl.create(:web_application) }
+    let(:web_app) { FactoryGirl.create(:web_application_with_user) }
 
     it "returns a hash of status information" do
       body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"

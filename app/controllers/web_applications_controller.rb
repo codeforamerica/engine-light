@@ -1,10 +1,9 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
-  before_action :check_user
 
   def show
     begin
-      @web_application = WebApplication.friendly.find(params[:id])
+      @web_application = current_user.web_applications.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       raise_not_found
     end
@@ -12,12 +11,8 @@ class WebApplicationsController < ApplicationController
   end
 
   def index
-    user_id = params[:user_id]
-    if user_id.present?
-      @web_applications = WebApplication.where('user_id = ?', user_id)
-    else
-      @web_applications = WebApplication.all
-    end
+    @current_user = current_user
+    @web_applications = @current_user.web_applications
   end
 
   def new
@@ -26,9 +21,10 @@ class WebApplicationsController < ApplicationController
   end
 
   def create
-    @web_application = current_user.web_applications.build(web_application_params)
-    if @web_application.save
-      redirect_to user_web_applications_path(current_user)
+    @current_user = current_user
+    @web_application = @current_user.web_applications.build(web_application_params)
+    if @current_user.save
+      redirect_to web_applications_path
     else
       flash.now.alert = "The web application cannot not be added. One or more values entered are invalid."
       render :new
@@ -43,7 +39,7 @@ class WebApplicationsController < ApplicationController
   def update
     @web_application = current_user.web_applications.friendly.find(params[:id])
     if @web_application.update_attributes(web_application_params)
-      redirect_to user_web_applications_path(current_user)
+      redirect_to web_applications_path
     else
       flash.now.alert = "The web application cannot not be updated. One or more values entered are invalid."
       render :edit
@@ -54,9 +50,5 @@ class WebApplicationsController < ApplicationController
 
   def web_application_params
     params.require(:web_application).permit(:name, :status_url)
-  end
-
-  def check_user
-    raise User::NotAuthorized if current_user != User.find(params["user_id"])
   end
 end
