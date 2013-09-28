@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe WebApplicationsController do
   let(:web_app_owner) { FactoryGirl.create(:user, email: "erica@cfa.org") }
-  let(:web_app)       { FactoryGirl.create(:web_application_with_user, name: "monkey") }
+  let(:web_app)       { FactoryGirl.create(:web_application, name: "monkey") }
   before do
     web_app.update_attributes(users: [web_app_owner])
     session[:email] = "erica@cfa.org"
@@ -17,6 +17,20 @@ describe WebApplicationsController do
 
     it "redirects when the user is not logged in" do
       session[:email] = nil
+      get action, params
+      response.should be_redirect
+    end
+  end
+
+  shared_examples "an action that restricts access to application managers" do
+    it "successfully renders the page if the user can manage the app" do
+      session[:email] = "erica@cfa.org"
+      get action, params
+      response.should be_success
+    end
+
+    it "redirects when the user is not logged in" do
+      session[:email] = "someone.else@cfa.org"
       get action, params
       response.should be_redirect
     end
@@ -55,6 +69,22 @@ describe WebApplicationsController do
       get action, params
       response.should be_success
     end
+  end
+
+  describe "#new" do
+    let(:action) { :new }
+    let(:params)  { {"id" => web_app.name} }
+
+    it_behaves_like "an action that requires login"
+    it_behaves_like "an action that restricts access to application managers"
+  end
+
+  describe "#edit" do
+    let(:action) { :edit }
+    let(:params)  { {"id" => web_app.name} }
+
+    it_behaves_like "an action that requires login"
+    it_behaves_like "an action that restricts access to application managers"
   end
 
   describe "#create" do

@@ -1,5 +1,7 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
+  before_action :check_app_access
+  skip_before_action :check_app_access, except: [:new, :edit]
 
   def show
     begin
@@ -65,6 +67,13 @@ class WebApplicationsController < ApplicationController
   end
 
   private
+
+  def check_app_access
+    web_application = WebApplication.friendly.find(params[:id])
+    if !current_user.web_applications.exists?(web_application)
+      redirect_to root_url
+    end
+  end
 
   def web_application_params
     params.require(:web_application).permit(:name, :status_url)
