@@ -13,8 +13,8 @@
   <tr>
     <td>
       <%= f.fields_for :user do |user_field| %>
-        <%= user_field.label :email %>
-        <%= user_field.collection_select(:ids, User.all - [@current_user], :id, :email, {selected: @web_application.users.map(&:id)}, {multiple: true}) %>
+        <%= user_field.label :email, "Additional Application Managers" %>
+        <%= user_field.collection_select(:ids, User.all - [@current_user], :id, :local_email_part, {selected: @web_application.users.map(&:id)}, {multiple: true}) %>
       <% end %>
     </td>
   </tr>
