@@ -1,0 +1,27 @@
+<div class="navbar navbar-static-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= image_tag "/assets/static/check_engine_light.png", id: "brand-icon" %>
+      <%= link_to "Engine Light", {url: web_applications_path}, {class: "brand"} %>
+      <ul class="nav pull-right">
+        <li>
+          <form class="navbar-form">
+            <% if @current_user.present? %>
+              <input type="button" id="signout" value="Sign out" class="btn btn-default navbar-btn">
+            <% else %>
+              <input type="button" id="signin" value="Sign in" class="btn btn-default navbar-btn">
+            <% end %>
+          </form>
+        </li>
+      </ul>
+      <ul class="nav">
+        <li>
+          <%= link_to "View Apps", web_applications_url %>
+        </li>
+        <li>
+          <%= link_to "Add App", new_web_application_url %>
+        </li>
+      </ul>>
+    </div>
+  </div>
+</div>
