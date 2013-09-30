@@ -1,14 +1,10 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
   before_action :check_app_access
-  skip_before_action :check_app_access, except: [:new, :edit]
+  skip_before_action :check_app_access, only: [:new, :index, :create]
 
   def show
-    begin
-      @web_application = current_user.web_applications.friendly.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      raise_not_found
-    end
+    @web_application = current_user.web_applications.friendly.find(params[:id])
     @web_app_available = @web_application.get_status == "ok" ? true : false
   end
 
@@ -69,9 +65,13 @@ class WebApplicationsController < ApplicationController
   private
 
   def check_app_access
-    web_application = WebApplication.friendly.find(params[:id])
-    if !current_user.web_applications.exists?(web_application)
-      redirect_to root_url
+    begin
+      web_application = WebApplication.friendly.find(params[:id])
+      if !current_user.web_applications.exists?(web_application)
+        redirect_to root_url
+      end
+    rescue ActiveRecord::RecordNotFound
+      raise_not_found
     end
   end
 

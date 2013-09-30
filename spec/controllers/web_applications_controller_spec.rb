@@ -73,10 +73,9 @@ describe WebApplicationsController do
 
   describe "#new" do
     let(:action) { :new }
-    let(:params)  { {"id" => web_app.name} }
+    let(:params) { {"id" => web_app.name} }
 
     it_behaves_like "an action that requires login"
-    it_behaves_like "an action that restricts access to application managers"
   end
 
   describe "#edit" do
