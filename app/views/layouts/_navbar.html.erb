@@ -2,9 +2,14 @@
   <div class="navbar-inner">
     <div class="container">
       <%= image_tag "/assets/static/check_engine_light.png", id: "brand-icon" %>
-      <%= link_to "Engine Light", {url: web_applications_path}, {class: "brand"} %>
+      <%= link_to "Engine Light", web_applications_path, {class: "brand"} %>
       <ul class="nav pull-right">
         <li>
+          <% if @current_user.present? %>
+            <p id="user-account-info" class="text-info">
+              <%= @current_user.email %>
+            </p>
+          <% end %>
           <form class="navbar-form">
             <% if @current_user.present? %>
               <input type="button" id="signout" value="Sign out" class="btn btn-default navbar-btn">
