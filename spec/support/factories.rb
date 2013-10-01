@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:email) {|n| "test_user{n}@cfa.org" }
+    sequence(:email) {|n| "test_user#{n}@cfa.org" }
   end
 
   factory :user_with_web_application, parent: :user do
