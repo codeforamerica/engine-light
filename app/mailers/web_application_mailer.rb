@@ -1,5 +1,4 @@
 class WebApplicationMailer < ActionMailer::Base
-  include SendGrid
   default from: "alerts@codeforamerica.org"
 
   def outage_notification(web_application)

@@ -28,9 +28,6 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
-# sending email
-gem 'sendgrid'
-
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl'
