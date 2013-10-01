@@ -4,6 +4,7 @@ class WebApplicationsController < ApplicationController
   skip_before_action :check_app_access, only: [:new, :index, :create]
 
   def show
+    @current_user = current_user
     @web_application = current_user.web_applications.friendly.find(params[:id])
     @web_app_available = @web_application.get_status == "ok" ? true : false
   end
