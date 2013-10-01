@@ -1,8 +1,9 @@
-<div id="app_status">
-  <h1><%= @web_application.name %></h1>
+<div class="status">
+  <h2><%= @web_application.name %></h2>
+  <b>Status:</b>&nbsp;
   <% if @web_app_available %>
-    <%= image_tag("green_icon.png", alt: 'green') %>
+    <b class="text-success">AVAILABLE</b>
   <% else %>
-    <%= image_tag("red_icon.png", alt: 'red') %>
+    <b class="text-alert">DOWN</b>
   <% end %>
 </div>
