@@ -5,7 +5,7 @@ user2 = User.create(email: "pui@codeforamerica.org")
 # Web Application
 name = "Code for America Website"
 status_url = "http://staging.codeforamerica.org/.well-known/status"
-WebApplication.create(name: name, status_url: status_url, user: user1)
+WebApplication.create(name: name, status_url: status_url, users: [user1])
 name = "Code for America Website Copy"
-WebApplication.create(name: name, status_url: status_url, user: user2)
+WebApplication.create(name: name, status_url: status_url, users: [user2])
 
