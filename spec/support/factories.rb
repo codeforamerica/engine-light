@@ -16,7 +16,7 @@ FactoryGirl.define do
 
   factory :web_application_with_user, parent: :web_application do
     after :create do |web_app|
-      users = FactoryGirl.create_list(:user, 1)
+      web_app.users = FactoryGirl.create_list(:user, 1)
     end
   end
 end
