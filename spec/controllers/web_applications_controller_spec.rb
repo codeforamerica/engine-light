@@ -73,14 +73,14 @@ describe WebApplicationsController do
 
   describe "#new" do
     let(:action) { :new }
-    let(:params) { {"id" => web_app.name} }
+    let(:params) { {"id" => web_app.slug} }
 
     it_behaves_like "an action that requires login"
   end
 
   describe "#edit" do
     let(:action) { :edit }
-    let(:params)  { {"id" => web_app.name} }
+    let(:params)  { {"id" => web_app.slug} }
 
     it_behaves_like "an action that requires login"
     it_behaves_like "an action that restricts access to application managers"
@@ -161,6 +161,13 @@ describe WebApplicationsController do
       put :update, {"web_application" => {"name" => "", "user" => {"ids" => [""]}}, "id" => web_application.slug}
       response.should render_template(:edit)
       flash.now[:alert].should_not be_nil
+    end
+  end
+
+  describe "#delete" do
+    it "destroys the web application" do
+      delete :destroy, {"id" => web_app.slug}
+      WebApplication.find_by_id(web_app.id).should be_nil
     end
   end
 end

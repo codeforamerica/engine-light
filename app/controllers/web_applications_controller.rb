@@ -63,6 +63,16 @@ class WebApplicationsController < ApplicationController
     end
   end
 
+  def destroy
+    @web_application = current_user.web_applications.friendly.find(params[:id])
+    if @web_application.destroy
+      redirect_to web_applications_path
+    else
+      flash.now.alert = "The web application cannot not be deleted."
+      render :edit
+    end
+  end
+
   private
 
   def check_app_access

@@ -1,2 +1,6 @@
 <h2>Change <%= @web_application.name%></h2>
 <%= render partial: "form", locals: {current_user: @current_user, web_application: @web_application} %>
+<br>
+<%= form_for @web_application, html: { :method => :delete } do |f| %>
+  <%= f.submit "Delete This Application", class: "btn btn-danger", confirm: "Are you sure you want to delete this application? This will permanently remove all application data." %>
+<% end %>
