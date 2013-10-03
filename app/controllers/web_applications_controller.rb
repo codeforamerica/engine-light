@@ -23,14 +23,13 @@ class WebApplicationsController < ApplicationController
     @current_user = current_user
     user = params["web_application"].delete("user")
     @web_application = @current_user.web_applications.build(web_application_params)
-
     user["ids"].each do |id|
       if id.present?
         @web_application.users << User.find(id)
       end
     end
 
-    if @current_user.save
+    if check_status(@web_application) && @current_user.save
       redirect_to web_applications_path
     else
       flash.now.alert = "The web application cannot not be added. One or more values entered are invalid."
@@ -74,6 +73,15 @@ class WebApplicationsController < ApplicationController
   end
 
   private
+
+  def check_status(web_application)
+    begin
+      web_application.get_status
+    rescue
+      return false
+    end
+    true
+  end
 
   def check_app_access
     begin
