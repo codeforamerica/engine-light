@@ -1,7 +1,6 @@
 module WebApplicationsHelper
-  def additional_managers(web_app, current_user)
-    managers = web_app.users - [current_user]
-    managers_string = managers.map(&:local_email_part).join(",")
-    managers_string.empty? ? "none" : managers_string
+  def owners(web_app, current_user)
+    owners_string = web_app.users.map(&:local_email_part).join(",")
+    owners_string.empty? ? "none" : owners_string
   end
 end

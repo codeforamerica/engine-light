@@ -2,7 +2,7 @@
   <%= f.label :name %><%= f.text_field :name %>
   <%= f.label :status_url %><%= f.text_field :status_url %>
   <%= f.fields_for :user do |user_field| %>
-  <%= user_field.label :email, "Additional Application Managers" %>
+  <%= user_field.label :email, "Who Will Own This Besides You?" %>
   <%= user_field.collection_select(:ids, User.all - [@current_user], :id, :local_email_part, {selected: @web_application.users.map(&:id)}, {multiple: true, class: "form-control"}) %>
   <% end %>
   <br>

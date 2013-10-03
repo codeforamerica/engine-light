@@ -3,14 +3,14 @@
   <tr>
     <th>Name</th>
     <th>Status Endpoint</th>
-    <th>Additional Managers</th>
+    <th>Owners</th>
     <th>&nbsp;</th>
   </tr>
   <% @web_applications.each do |web_app| %>
     <tr>
       <td><%= link_to web_app.name, web_application_path(web_app) %></td>
       <td><%= web_app.status_url %></td>
-      <td><%= additional_managers(web_app, @current_user) %></td>
+      <td><%= owners(web_app, @current_user) %></td>
       <td><%= link_to "edit", edit_web_application_path(web_app) %></td>
     </tr>
   <% end %>
