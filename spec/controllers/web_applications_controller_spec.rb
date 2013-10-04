@@ -2,8 +2,11 @@ require 'spec_helper'
 
 describe WebApplicationsController do
   let(:web_app_owner) { FactoryGirl.create(:user, email: "erica@cfa.org") }
-  let(:web_app)       { FactoryGirl.create(:web_application, name: "monkey") }
+  let(:web_app)       { FactoryGirl.create(:web_application, name: "monkey",
+                                           status_url: "http://www.example.com/status") }
   before do
+    body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
+    FakeWeb.register_uri(:get, "http://www.example.com/status", body: body_string)
     web_app.update_attributes(users: [web_app_owner])
     session[:email] = "erica@cfa.org"
   end
@@ -44,7 +47,7 @@ describe WebApplicationsController do
 
     before do
       body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
-      FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", body: body_string)
+      FakeWeb.register_uri(:get, "http://www.example.com/status", body: body_string)
     end
 
     it "returns ok with a valid application" do
@@ -133,14 +136,18 @@ describe WebApplicationsController do
 
   describe "#update" do
     let(:current_user)    { FactoryGirl.create(:user) }
-    let(:web_application) { FactoryGirl.create(:web_application) }
+    let(:status_url)      { "http://www.example.com/status" }
+    let(:web_application) { FactoryGirl.create(:web_application, status_url: status_url,
+                                               name: "Test Application") }
     let(:params)          { {"web_application" => {"name" => "Meow Test Web App", 
-                                                   "status_url" => "http://www.example.com/status",
+                                                   "status_url" => status_url,
                                                    "user" => {"ids" => [""]}},
                                                    "id" => web_application.slug} }
 
     before do
       controller.stub(:current_user).and_return(current_user)
+      body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
+      FakeWeb.register_uri(:get, status_url, body: body_string)
       web_application.update_attributes(users: [current_user])
     end
 
@@ -171,6 +178,13 @@ describe WebApplicationsController do
 
     it "renders the edit page and shows a flash message when attributes are invalid" do
       put :update, {"web_application" => {"name" => "", "user" => {"ids" => [""]}}, "id" => web_application.slug}
+      response.should render_template(:edit)
+      flash.now[:alert].should_not be_nil
+    end
+
+    it "renders the edit page and shows a flash message when the status url does not return a valid response" do
+      FakeWeb.register_uri(:get, "http://www.example.com/status", :status => ["500", "Internal Server Error"])
+      put :update, params
       response.should render_template(:edit)
       flash.now[:alert].should_not be_nil
     end
