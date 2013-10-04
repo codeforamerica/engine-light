@@ -6,7 +6,7 @@ class PersonaController < ApplicationController
       assertion = params["assertion"]
       email = get_identity(assertion)
       session[:email] = email
-      if email.present? && check_for_cfa_email(email)
+      if email.present?
         user = User.find_or_create_by(email: email)
         render json: {location: web_applications_url}
       else
@@ -27,9 +27,5 @@ class PersonaController < ApplicationController
     request_params = {assertion: assertion, audience: request.url}
     response = post(uri, request_params)
     email = response.try(:[], "email")
-  end
-
-  def check_for_cfa_email(email)
-    email =~ /@(cfa|codeforamerica)\.org$/
   end
 end

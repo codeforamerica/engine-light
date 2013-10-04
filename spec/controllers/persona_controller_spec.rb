@@ -22,21 +22,6 @@ describe PersonaController do
         expect { xhr :post, :login }.to change(User, :count).by(1)
       end
     end
-
-    context "with a non-cfa address" do
-      before do
-        controller.stub(:get_identity).and_return("erica@hellokitty.com")
-      end
-
-      it "responds with an unauthorized status" do
-        xhr :post, :login
-        response.code.should == "401"
-      end
-
-      it "should not create a user" do
-        expect { xhr :post, :login }.to_not change(User, :count)
-      end
-    end
   end
 
   describe "#logout" do
