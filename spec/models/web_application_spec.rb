@@ -6,14 +6,14 @@ describe WebApplication do
   let(:valid_body_string) { "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}" } 
 
   describe "#get_status" do
-    it "returns a hash of status information" do
+    it "returns 'ok' when the get request is successful" do
       FakeWeb.register_uri(:get, status_url, body: valid_body_string)
       web_application.get_status.should == "ok"
     end
 
-    it "raises when the get request is unsuccessful" do
+    it "returns 'down' when the get request is unsuccessful" do
       FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", :status => ["500", "Internal Server Error"])
-      expect { web_application.get_status }.to raise_error
+      web_application.get_status.should == "down"
     end
   end
 

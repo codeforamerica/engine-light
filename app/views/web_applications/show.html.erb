@@ -1,11 +1,8 @@
 <div class="status">
   <h2><%= @web_application.name %></h2>
   <b>Status:</b>&nbsp;
-  <% if @web_app_available %>
-    <b class="text-success">AVAILABLE</b>
-  <% else %>
-    <b class="text-alert">DOWN</b>
-  <% end %>
+  <% status = @web_app_status == "ok" ? "success" : "alert" %>
+  <b class="text-<%= status %>"><%= @web_app_status %></b>
 </div>
 <br>
 <div>

@@ -9,7 +9,11 @@ class WebApplication < ActiveRecord::Base
   friendly_id :name, use: :slugged
 
   def get_status
-    status = get(status_url)
+    begin
+      status = get(status_url)
+    rescue
+      return "down"
+    end
     status.try(:[], "status")
   end
 
@@ -17,7 +21,7 @@ private
 
   def status_url_is_valid?
     begin
-      get_status
+      get(status_url)
     rescue
       errors.add(:status_url, "is unavailable or does not return a valid response")
     end
