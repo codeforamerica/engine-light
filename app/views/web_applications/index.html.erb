@@ -11,7 +11,8 @@
     <th>&nbsp;</th>
   </tr>
   <% @web_applications.each do |web_app| %>
-    <tr>
+    <% row_class = web_app.get_status == "ok" ? "success" : "error" %>
+    <tr class="<%= row_class %>">
       <td><%= link_to web_app.name, web_application_path(web_app) %></td>
       <td><%= web_app.get_status %></td>
       <td><%= web_app.root_url %></td>
