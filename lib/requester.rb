@@ -4,12 +4,18 @@ require 'json'
 module Requester
   def get(uri_string)
     uri = URI.parse(uri_string)
-    response = Net::HTTP.get_response(uri)
-    
+    response = nil
+    Net::HTTP.start(uri.host, uri.port, timeout: 5) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+    end
     case response
     when Net::HTTPRedirection
       redirect_uri = URI.parse(response['Location'])
-      response = Net::HTTP.get_response(redirect_uri)
+      Net::HTTP.start(redirect_uri.host, redirect_uri.port, timeout: 5) do |http|
+        request = Net::HTTP::Get.new redirect_uri
+        response = http.request request
+      end
       JSON.parse response.body
     when Net::HTTPSuccess
       JSON.parse response.body
