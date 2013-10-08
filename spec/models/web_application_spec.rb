@@ -4,10 +4,10 @@ describe WebApplication do
   let(:status_url)        { "http://www.codeforamerica.org/.well-known/status" } 
   let(:web_application)   { FactoryGirl.build(:web_application_with_user, status_url: status_url) }
   let(:valid_body_string) { "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}" } 
+  before                  { FakeWeb.register_uri(:get, status_url, body: valid_body_string) }
 
   describe "#get_status" do
     it "returns 'ok' when the get request is successful" do
-      FakeWeb.register_uri(:get, status_url, body: valid_body_string)
       web_application.get_status.should == "ok"
     end
 
@@ -17,9 +17,15 @@ describe WebApplication do
     end
   end
 
+  describe "#root_url" do
+    it "returns the URL scheme and domain" do
+      web_application = FactoryGirl.create(:web_application_with_user, status_url: status_url)
+      web_application.root_url.should == "http://www.codeforamerica.org"
+    end
+  end
+
   describe "validations" do
     it "does not allow a user to belong to the web app more than once" do
-      FakeWeb.register_uri(:get, status_url, body: valid_body_string)
       user = FactoryGirl.create(:user)
       web_application = FactoryGirl.create(:web_application, status_url: status_url)
       web_application.update_attributes(users: [user])

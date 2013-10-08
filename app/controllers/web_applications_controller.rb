@@ -6,7 +6,6 @@ class WebApplicationsController < ApplicationController
   def show
     @current_user = current_user
     @web_application = current_user.web_applications.friendly.find(params[:id])
-    @web_app_status = @web_application.get_status
   end
 
   def index

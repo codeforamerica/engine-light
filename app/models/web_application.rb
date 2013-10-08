@@ -10,11 +10,15 @@ class WebApplication < ActiveRecord::Base
 
   def get_status
     begin
-      status = get(status_url)
+      @status ||= get(status_url)
     rescue
       return "down"
     end
-    status.try(:[], "status")
+    @status.try(:[], "status")
+  end
+
+  def root_url
+    status_url.split(/(?<!\/)(\/)(?!\/)/).first
   end
 
 private
