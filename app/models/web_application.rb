@@ -18,7 +18,8 @@ class WebApplication < ActiveRecord::Base
   end
 
   def root_url
-    status_url.split(/(?<!\/)(\/)(?!\/)/).first
+    uri = URI.parse(status_url)
+    "#{uri.scheme}://#{uri.host}"
   end
 
 private
