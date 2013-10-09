@@ -6,5 +6,7 @@
 </div>
 <br>
 <div>
-  <%= link_to "edit", edit_web_application_path(@web_application) %>
+  <span class="new-or-edit-app icon-edit">
+    <%= link_to "edit", edit_web_application_path(@web_application), class: "new-or-edit-app-link" %>
+  </span>
 </div>

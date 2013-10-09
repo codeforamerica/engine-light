@@ -11,11 +11,11 @@
   margin-right: 10px;
 }
 
-#new-app {
+.new-or-edit-app {
   display: inline-block;
 }
 
-#new-app-link {
+.new-or-edit-app-link {
   padding-left: 16px;
   font-weight: bold;
 }
@@ -23,4 +23,8 @@
 td.email-list {
   max-width: 300px;
   word-wrap: normal;
+}
+
+th#edit {
+  min-width: 30px;
 }
