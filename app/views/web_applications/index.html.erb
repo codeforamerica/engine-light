@@ -16,7 +16,7 @@
       <td><%= link_to web_app.name, web_application_path(web_app) %></td>
       <td><%= web_app.get_status %></td>
       <td><%= web_app.root_url %></td>
-      <td><%= owners(web_app, @current_user) %></td>
+      <td class="email-list"><%= owners(web_app, @current_user) %></td>
       <td><%= link_to "edit", edit_web_application_path(web_app) %></td>
     </tr>
   <% end %>
