@@ -1,13 +1,13 @@
 desc "Checks application statuses via heroku scheduler"
 task :check_app_statuses => :environment do
   WebApplication.all.each do |web_app|
-    if web_app.get_status != "ok" || web_app.slug == "code-for-america-website"
+    if web_app.get_status != "ok"
       if send_downtime_notification?(web_app)
         WebApplicationMailer.outage_notification(web_app).deliver
         web_app.update_attributes(last_downtime_notification_at: Time.now)
       end
     end
-    if web_app.get_status == "ok" && web_app.slug != "code-for-america-website"
+    if web_app.get_status == "ok"
       if send_recovery_notification?(web_app)
         WebApplicationMailer.recovery_notification(web_app).deliver
         web_app.update_attributes(last_downtime_notification_at: nil)
