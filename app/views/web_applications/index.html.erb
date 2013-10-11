@@ -8,7 +8,7 @@
     <th>Status</th>
     <th>URL</th>
     <th>Owners</th>
-    <th id="edit">&nbsp;</th>
+    <th>&nbsp;</th>
   </tr>
   <% @web_applications.each do |web_app| %>
     <% row_class = web_app.current_status == "ok" ? "success" : "error" %>
@@ -18,8 +18,8 @@
       <td><%= web_app.root_url %></td>
       <td class="email-list"><%= owners(web_app, @current_user) %></td>
       <td>
-        <div class="new-or-edit-app icon-edit">
-          <%= link_to "edit", edit_web_application_path(web_app), class: "new-or-edit-app-link" %>
+        <div>
+          <%= link_to "edit", edit_web_application_path(web_app) %>
         </div>
       </td>
     </tr>
