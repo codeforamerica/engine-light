@@ -8,13 +8,15 @@ class WebApplication < ActiveRecord::Base
   has_and_belongs_to_many :users, autosave: true
   friendly_id :name, use: :slugged
 
-  def get_status
+  def update_current_status!
     begin
-      @status ||= get(status_url)
+      status = get(status_url)
     rescue
-      return "down"
+      update_attributes(current_status: "down")
+      return
     end
-    @status.try(:[], "status")
+    status_string = status.try(:[], "status")
+    update_attributes(current_status: status_string)
   end
 
   def root_url

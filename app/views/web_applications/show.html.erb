@@ -1,8 +1,8 @@
 <div class="status">
   <h2><%= @web_application.name %></h2>
   <b>Status:</b>&nbsp;
-  <% status = @web_application.get_status == "ok" ? "success" : "alert" %>
-  <b class="text-<%= status %>"><%= @web_application.get_status %></b>
+  <% status = @web_application.current_status == "ok" ? "success" : "error" %>
+  <b class="text-<%= status %>"><%= @web_application.current_status %></b>
 </div>
 <br>
 <div>
