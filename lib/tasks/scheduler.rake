@@ -4,8 +4,8 @@ task :check_app_statuses => :environment do
     if web_app.get_status != "ok" || web_app.slug == "code-for-america-website"
       if send_downtime_notification?(web_app)
         WebApplicationMailer.outage_notification(web_app).deliver
+        web_app.update_attributes(last_downtime_notification_at: Time.now)
       end
-      web_app.update_attributes(last_downtime_notification_at: Time.now)
     end
     if web_app.get_status == "ok" && web_app.slug != "code-for-america-website"
       if send_recovery_notification?(web_app)
