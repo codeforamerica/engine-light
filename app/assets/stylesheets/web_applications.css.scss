@@ -2,10 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.status {
- font-size: 24px;
-}
-
 #index-header {
   display: inline-block;
   margin-right: 10px;
@@ -23,4 +19,18 @@
 td.email-list {
   max-width: 200px;
   word-wrap: normal;
+}
+
+.details {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.details-label, .details-value {
+  display: inline-block;
+}
+
+.details-label {
+  vertical-align: top;
 }

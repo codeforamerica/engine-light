@@ -1,9 +1,43 @@
-<div class="status">
-  <h2><%= @web_application.name %></h2>
-  <b>Status:</b>&nbsp;
+<h2><%= @web_application.name %></h2>
+<div class="details">
+  <div class="details-label">
+    Status:
+  </div>
   <% status = @web_application.current_status == "ok" ? "success" : "error" %>
-  <b class="text-<%= status %>"><%= @web_application.current_status %></b>
+  <div class="details-value text-<%= status %>">
+    <%= @web_application.current_status %>
+  </div>
 </div>
+<% if @web_application.status_checked_at.present? %>
+  <div class="details">
+    <div class="details-label">
+      Time of status check:
+    </div>
+    <div class="details-value muted">
+      <%= @web_application.status_checked_at %>
+    </div>
+  </div>
+<% end %>
+<% if @web_application.resources.present? %>
+  <div class="details">
+    <div class="details-label">
+      Resources:
+    </div>
+    <div class="details-value muted">
+      <%= resource_list(@web_application.resources).join("<br>").html_safe %>
+    </div>
+  </div>
+<% end %>
+<% if @web_application.dependencies.present? %>
+  <div class="details">
+    <div class="details-label">
+      Dependencies:
+    </div>
+    <div class="details-value muted">
+      <%= @web_application.dependencies.join("<br>").html_safe %>
+    </div>
+  </div>
+<% end %>
 <br>
 <div>
   <span class="new-or-edit-app icon-edit">
