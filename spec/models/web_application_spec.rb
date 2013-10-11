@@ -6,14 +6,16 @@ describe WebApplication do
   let(:valid_body_string) { "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}" } 
   before                  { FakeWeb.register_uri(:get, status_url, body: valid_body_string) }
 
-  describe "#get_status" do
-    it "returns 'ok' when the get request is successful" do
-      web_application.get_status.should == "ok"
+  describe "#update_current_status!" do
+    it "sets current status to 'ok' when the get request is successful" do
+      web_application.update_current_status!
+      web_application.current_status.should == "ok"
     end
 
-    it "returns 'down' when the get request is unsuccessful" do
+    it "sets current status to 'down' when the get request is unsuccessful" do
       FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", :status => ["500", "Internal Server Error"])
-      web_application.get_status.should == "down"
+      web_application.update_current_status!
+      web_application.current_status.should == "down"
     end
   end
 

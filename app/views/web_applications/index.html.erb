@@ -11,10 +11,10 @@
     <th id="edit">&nbsp;</th>
   </tr>
   <% @web_applications.each do |web_app| %>
-    <% row_class = web_app.get_status == "ok" ? "success" : "error" %>
+    <% row_class = web_app.current_status == "ok" ? "success" : "error" %>
     <tr class="<%= row_class %>">
       <td><%= link_to web_app.name, web_application_path(web_app) %></td>
-      <td><%= web_app.get_status %></td>
+      <td><%= web_app.current_status %></td>
       <td><%= web_app.root_url %></td>
       <td class="email-list"><%= owners(web_app, @current_user) %></td>
       <td>
