@@ -5,7 +5,7 @@ class WebApplicationsController < ApplicationController
 
   def show
     @current_user = current_user
-    @web_application = current_user.web_applications.friendly.find(params[:id])
+    @web_application = WebApplication.friendly.find(params[:id])
     @web_application.get_current_status
     @web_application.save
   end
@@ -44,7 +44,7 @@ class WebApplicationsController < ApplicationController
 
   def edit
     @current_user = current_user
-    @web_application = @current_user.web_applications.friendly.find(params[:id])
+    @web_application = WebApplication.friendly.find(params[:id])
   end
 
   def update
@@ -82,7 +82,7 @@ class WebApplicationsController < ApplicationController
   def check_app_access
     begin
       web_application = WebApplication.friendly.find(params[:id])
-      if !current_user.web_applications.exists?(web_application)
+      if !current_user.web_applications.exists?(web_application) && !current_user.is_admin?
         redirect_to root_url
       end
     rescue ActiveRecord::RecordNotFound

@@ -25,9 +25,16 @@ describe WebApplicationsController do
     end
   end
 
-  shared_examples "an action that restricts access to application managers" do
+  shared_examples "an action that restricts access to application managers and admins" do
     it "successfully renders the page if the user can manage the app" do
       session[:email] = "erica@cfa.org"
+      get action, params
+      response.should be_success
+    end
+
+    it "successfully renders the page if the user is an admin" do
+      FactoryGirl.create(:user, email: "pui@cfa.org", role: "admin")
+      session[:email] = "pui@cfa.org"
       get action, params
       response.should be_success
     end
@@ -44,6 +51,7 @@ describe WebApplicationsController do
     let(:params)  { {"id" => web_app.name} }
 
     it_behaves_like "an action that requires login"
+    it_behaves_like "an action that restricts access to application managers and admins"
 
     before do
       body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
@@ -100,7 +108,7 @@ describe WebApplicationsController do
     let(:params)  { {"id" => web_app.slug} }
 
     it_behaves_like "an action that requires login"
-    it_behaves_like "an action that restricts access to application managers"
+    it_behaves_like "an action that restricts access to application managers and admins"
   end
 
   describe "#create" do
