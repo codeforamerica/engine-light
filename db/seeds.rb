@@ -1,5 +1,5 @@
 # User
-user1 = User.create(email: "erica@codeforamerica.org")
+user1 = User.create(email: "erica@codeforamerica.org", role: "admin")
 user2 = User.create(email: "pui@codeforamerica.org")
 
 # Web Application

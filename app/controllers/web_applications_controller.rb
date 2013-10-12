@@ -12,7 +12,11 @@ class WebApplicationsController < ApplicationController
 
   def index
     @current_user = current_user
-    @web_applications = @current_user.web_applications
+    if @current_user.is_admin?
+      @web_applications = WebApplication.all
+    else
+      @web_applications = @current_user.web_applications
+    end
   end
 
   def new

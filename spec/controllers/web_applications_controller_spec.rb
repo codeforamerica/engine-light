@@ -63,14 +63,28 @@ describe WebApplicationsController do
   end
 
   describe "#index" do
-    let(:action) { :index }
-    let(:params) { {} }
+    let(:action)        { :index }
+    let(:params)        { {} }
+    let(:other_web_app) { FactoryGirl.create(:web_application_with_user,
+                                             status_url: "http://www.example.com/status") }
 
     it_behaves_like "an action that requires login"
 
     it "returns ok" do
       get action, params
       response.should be_success
+    end
+
+    it "returns apps belonging to the user if they are an app manager" do
+      get action, params
+      assigns(:web_applications).should == [web_app]
+    end
+
+    it "returns all apps when the user is an admin" do
+      current_user = FactoryGirl.create(:user, role: "admin")
+      controller.stub(:current_user).and_return(current_user)
+      get action, params
+      assigns(:web_applications).should == [web_app, other_web_app]
     end
   end
 
