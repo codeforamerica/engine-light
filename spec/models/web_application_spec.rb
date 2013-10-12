@@ -6,9 +6,9 @@ describe WebApplication do
   let(:valid_body_string) { "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":[\"Akismet\",\"Scribd\"],\"resources\":{\"Sendgrid\":6.545}}" } 
   before                  { FakeWeb.register_uri(:get, status_url, body: valid_body_string) }
 
-  describe "#update_current_status!" do
+  describe "#get_current_status!" do
     context "the get request is successful" do
-      before { web_application.update_current_status! }
+      before { web_application.get_current_status }
 
       it "sets current status to 'ok'" do
         web_application.current_status.should == "ok"
@@ -30,7 +30,7 @@ describe WebApplication do
     context "the get request fails" do
       before do
         FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", :status => ["500", "Internal Server Error"])
-        web_application.update_current_status!
+        web_application.get_current_status
       end
 
       it "sets current status to 'down' when the get request is unsuccessful" do

@@ -5,20 +5,20 @@ class WebApplication < ActiveRecord::Base
   validates_presence_of :name, :status_url
   validates_uniqueness_of :name
   validate :status_url_is_valid?
+  after_save :get_current_status
   has_and_belongs_to_many :users, autosave: true
   friendly_id :name, use: :slugged
   attr_accessor :status_checked_at, :resources, :dependencies
 
 
-  def update_current_status!
+  def get_current_status
     begin
       response = get(status_url)
     rescue
-      update_attributes(current_status: "down")
+      self.current_status = "down"
       return
     end
-    status_string = response.try(:[], "status")
-    update_attributes(current_status: status_string)
+    self.current_status = response.try(:[], "status")
 
     @status_checked_at = Time.at(response.try(:[], "updated").to_i).utc
     @resources = response.try(:[], "resources")

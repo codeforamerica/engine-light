@@ -1,7 +1,8 @@
 desc "Checks application statuses via heroku scheduler"
 task :check_app_statuses => :environment do
   WebApplication.all.each do |web_app|
-    web_app.update_current_status!
+    web_app.get_current_status
+    web_app.save
     if web_app.current_status != "ok"
       if send_downtime_notification?(web_app)
         WebApplicationMailer.outage_notification(web_app).deliver
