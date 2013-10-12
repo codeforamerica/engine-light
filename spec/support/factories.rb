@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
     sequence(:email) {|n| "test_user#{n}@cfa.org" }
-    role "app_manager"
+    role "application_manager"
   end
 
   factory :user_with_web_application, parent: :user do
