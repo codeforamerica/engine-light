@@ -5,7 +5,7 @@ class WebApplication < ActiveRecord::Base
   validates_presence_of :name, :status_url
   validates_uniqueness_of :name
   validate :status_url_is_valid?
-  after_save :get_current_status
+  before_save :get_current_status
   has_and_belongs_to_many :users, autosave: true
   friendly_id :name, use: :slugged
   attr_accessor :status_checked_at, :resources, :dependencies
