@@ -7,6 +7,8 @@
 
     <h2>Your application <%= @web_application_name %> is unreachable.</h2>
 
+    <h3>Status: <%= @web_application_current_status %></h3>
+
     <p>For more information please log into <%= link_to ENV['HOST_NAME'], url_for(host: ENV["HOST_NAME"], controller: "welcome", action: "index") %></p>
   </body>
 </html>
