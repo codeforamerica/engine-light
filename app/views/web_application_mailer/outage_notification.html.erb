@@ -7,6 +7,6 @@
 
     <h2>Your application <%= @web_application_name %> is unreachable.</h2>
 
-    <p>For more information please log into <%= link_to "http://engine-light.herokuapp.com", "http://engine-light.herokuapp.com" %></p>
+    <p>For more information please log into <%= link_to ENV['HOST_NAME'], url_for(host: ENV["HOST_NAME"], controller: "welcome", action: "index") %></p>
   </body>
 </html>
