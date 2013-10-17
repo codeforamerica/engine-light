@@ -1,7 +1,7 @@
 class WebApplicationsController < ApplicationController
   before_action :require_login
   before_action :check_app_access
-  skip_before_action :check_app_access, only: [:new, :index, :create]
+  skip_before_action :check_app_access, only: [:new, :index, :create, :update]
 
   def show
     @current_user = current_user
@@ -48,7 +48,7 @@ class WebApplicationsController < ApplicationController
   end
 
   def update
-    @web_application = current_user.web_applications.friendly.find(params[:id])
+    @web_application = WebApplication.friendly.find(params[:id])
     user = params["web_application"].delete("user")
 
     web_application_users = [current_user]

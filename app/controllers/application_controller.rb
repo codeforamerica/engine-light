@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from ActionController::RoutingError, with: :render_not_found
+    rescue_from ActionController::MethodNotAllowed, with: :render_forbidden
     rescue_from User::NotAuthorized, with: :render_forbidden
   end
 
@@ -17,6 +18,10 @@ class ApplicationController < ActionController::Base
     respond_to do |f|
       f.html{ render "public/404.html", :status => 404 }
     end
+  end
+
+  def raise_forbidden
+    raise ActionController::MethodNotAllowed.new
   end
 
   def render_forbidden(e)
