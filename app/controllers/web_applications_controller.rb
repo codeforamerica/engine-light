@@ -27,14 +27,15 @@ class WebApplicationsController < ApplicationController
   def create
     @current_user = current_user
     user = params["web_application"].delete("user")
-    @web_application = @current_user.web_applications.build(web_application_params)
-    user["ids"].each do |id|
-      if id.present?
-        @web_application.users << User.find(id)
+    @web_application = WebApplication.new(web_application_params)
+    if user.present?
+      user["emails"].each do |email|
+        if email.present?
+          @web_application.users << User.find_by_email(email)
+        end
       end
     end
-
-    if @current_user.save
+    if @web_application.save
       redirect_to web_applications_path
     else
       flash.now.alert = "The web application cannot not be added. One or more values entered are invalid."
@@ -51,10 +52,13 @@ class WebApplicationsController < ApplicationController
     @web_application = WebApplication.friendly.find(params[:id])
     user = params["web_application"].delete("user")
 
-    web_application_users = [current_user]
-    user["ids"].each do |id|
-      if id.present?
-         web_application_users << User.find(id)
+    web_application_users = []
+
+    if user.present?
+      user["emails"].each do |email|
+        if email.present?
+           web_application_users << User.find_by_email(email)
+        end
       end
     end
     @web_application.users = web_application_users

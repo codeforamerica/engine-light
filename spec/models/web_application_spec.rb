@@ -47,17 +47,15 @@ describe WebApplication do
 
   describe "#root_url" do
     it "returns the URL scheme and domain" do
-      web_application = FactoryGirl.create(:web_application_with_user, status_url: status_url)
       web_application.root_url.should == "http://www.codeforamerica.org"
     end
   end
 
   describe "validations" do
     it "does not allow a user to belong to the web app more than once" do
-      user = FactoryGirl.create(:user)
-      web_application = FactoryGirl.create(:web_application, status_url: status_url)
-      web_application.update_attributes(users: [user])
-      expect { web_application.users << user }.to raise_error(ActiveRecord::RecordNotUnique)
+      web_application = FactoryGirl.create(:web_application_with_user)
+      user = web_application.users.first
+      expect{ web_application.users << user }.to raise_error(ActiveRecord::RecordNotUnique)
     end
 
     it "cannot have an invalid status url" do

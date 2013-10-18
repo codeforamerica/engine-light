@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe WebApplicationsController do
-  let(:web_app_owner) { FactoryGirl.create(:user, email: "erica@cfa.org") }
-  let(:web_app)       { FactoryGirl.create(:web_application, name: "monkey",
+  let(:web_app)       { FactoryGirl.create(:web_application_with_user, name: "monkey",
                                            status_url: "http://www.example.com/status") }
+  let(:web_app_owner) { web_app.users.first }
+
   before do
     body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
     FakeWeb.register_uri(:get, "http://www.example.com/status", body: body_string)
-    web_app.update_attributes(users: [web_app_owner])
+    web_app_owner.update_attributes(email: "erica@cfa.org")
     session[:email] = "erica@cfa.org"
   end
 
@@ -115,13 +116,8 @@ describe WebApplicationsController do
     let(:current_user) { FactoryGirl.create(:user) }
     let(:params)       { {"web_application" => {"name" => "Test Web App",
                                                 "status_url" => "http://www.example.com/status",
-                                                "user" => {"ids" => [""]}}} }
-
-    before do
-      controller.stub(:current_user).and_return(current_user)
-      body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
-      FakeWeb.register_uri(:get, "http://www.example.com/status", body: body_string)
-    end
+                                                "user" => {"emails" => [current_user.email]}}} }
+    before { controller.stub(:current_user).and_return(current_user) }
 
     it "creates a web application belonging to the current user" do
       expect {
@@ -131,7 +127,7 @@ describe WebApplicationsController do
 
     it "creates a web application belonging to more than one user" do
       another_user = FactoryGirl.create(:user)
-      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      users_hash = {"web_application" => {"user" => {"emails" => [current_user.email, another_user.email]}}}
       post :create, params.deep_merge(users_hash)
       web_application = WebApplication.find_by_name("Test Web App")
       web_application.users.count.should == 2
@@ -142,8 +138,16 @@ describe WebApplicationsController do
       response.should be_redirect
     end
 
+    it "renders the new page and shows a flash message when no users are added to the app" do
+      status_url = "http://www.example.com/status"
+      post :create, {"web_application" => {"name" => "Test Web App", "status_url" => status_url,
+                                           "user" => {"emails" => [""]}}}
+      response.should render_template(:new)
+      flash.now[:alert].should_not be_nil
+    end
+
     it "renders the new page and shows a flash message when attributes are missing" do
-      post :create, {"web_application" => {"name" => "Test Web App", "user" => {"ids" => [""]}}}
+      post :create, {"web_application" => {"name" => "Test Web App", "user" => {"emails" => [""]}}}
       response.should render_template(:new)
       flash.now[:alert].should_not be_nil
     end
@@ -157,21 +161,15 @@ describe WebApplicationsController do
   end
 
   describe "#update" do
-    let(:current_user)    { FactoryGirl.create(:user) }
     let(:status_url)      { "http://www.example.com/status" }
-    let(:web_application) { FactoryGirl.create(:web_application, status_url: status_url,
+    let(:web_application) { FactoryGirl.create(:web_application_with_user, status_url: status_url,
                                                name: "Test Application") }
+    let(:current_user)    { web_application.users.first }
     let(:params)          { {"web_application" => {"name" => "Meow Test Web App", 
                                                    "status_url" => status_url,
-                                                   "user" => {"ids" => [""]}},
+                                                   "user" => {"emails" => [current_user.email]}},
                                                    "id" => web_application.slug} }
-
-    before do
-      controller.stub(:current_user).and_return(current_user)
-      body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
-      FakeWeb.register_uri(:get, status_url, body: body_string)
-      web_application.update_attributes(users: [current_user])
-    end
+    before { controller.stub(:current_user).and_return(current_user) }
 
     it "updates a web application belonging to the current user" do
       put :update, params
@@ -180,7 +178,7 @@ describe WebApplicationsController do
 
     it "updates a web application to have more than one user" do
       another_user = FactoryGirl.create(:user)
-      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      users_hash = {"web_application" => {"user" => {"emails" => [current_user.email, another_user.email]}}}
       put :update, params.deep_merge(users_hash)
       web_application.reload.users.should == [current_user, another_user]
     end
@@ -188,7 +186,7 @@ describe WebApplicationsController do
     it "does not re-assign a user to the web application" do
       another_user = FactoryGirl.create(:user)
       web_application.users << another_user
-      users_hash = {"web_application" => {"user" => {"ids" => ["", another_user.id.to_s]}}}
+      users_hash = {"web_application" => {"user" => {"emails" => [current_user.email, another_user.email]}}}
       put :update, params.deep_merge(users_hash)
       web_application.reload.users.should == [current_user, another_user]
     end
@@ -199,7 +197,7 @@ describe WebApplicationsController do
     end
 
     it "renders the edit page and shows a flash message when attributes are invalid" do
-      put :update, {"web_application" => {"name" => "", "user" => {"ids" => [""]}}, "id" => web_application.slug}
+      put :update, {"web_application" => {"name" => "", "user" => {"emails" => [""]}}, "id" => web_application.slug}
       response.should render_template(:edit)
       flash.now[:alert].should_not be_nil
     end

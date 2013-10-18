@@ -4,9 +4,11 @@ class WebApplication < ActiveRecord::Base
 
   validates_presence_of :name, :status_url
   validates_uniqueness_of :name
+  validates_presence_of :users
   validate :status_url_is_valid?
   before_save :get_current_status
-  has_and_belongs_to_many :users, autosave: true
+  has_many :users, through: :user_web_applications, autosave: true
+  has_many :user_web_applications
   friendly_id :name, use: :slugged
   attr_accessor :status_checked_at, :resources, :dependencies
 

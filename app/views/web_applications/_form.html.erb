@@ -2,8 +2,14 @@
   <%= f.label :name, "Web Application Name" %><%= f.text_field :name %>
   <%= f.label :status_url %><%= f.text_field :status_url %>
   <%= f.fields_for :user do |user_field| %>
-  <%= user_field.label :email, "Who Will Own This Besides You?" %>
-  <%= user_field.collection_select(:ids, User.all - [@current_user], :id, :email, {selected: @web_application.users.map(&:id)}, {multiple: true, class: "form-control"}) %>
+  <%= user_field.label :email, "Who Will Own This?" %>
+    <% User.all.each do |user| %>
+      <% is_checked = user == @current_user || @web_application.users.include?(user) ? true : false %>
+      <label>
+        <%= check_box_tag "web_application[user][emails][]", user.email, is_checked %>
+        <%= user.email %>
+      </label>
+    <% end %>
   <% end %>
   <br>
   <%= f.submit class: "btn" %>

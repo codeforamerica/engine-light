@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131012010042) do
+ActiveRecord::Schema.define(version: 20131018171349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_web_applications", force: true do |t|
+    t.integer "user_id"
+    t.integer "web_application_id"
+  end
+
+  add_index "user_web_applications", ["user_id", "web_application_id"], name: "index_user_web_applications_on_user_id_and_web_application_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -22,13 +29,6 @@ ActiveRecord::Schema.define(version: 20131012010042) do
     t.datetime "updated_at"
     t.string   "role",       default: "application_manager"
   end
-
-  create_table "users_web_applications", force: true do |t|
-    t.integer "user_id"
-    t.integer "web_application_id"
-  end
-
-  add_index "users_web_applications", ["user_id", "web_application_id"], name: "index_users_web_applications_on_user_id_and_web_application_id", unique: true, using: :btree
 
   create_table "web_applications", force: true do |t|
     t.string   "name"
