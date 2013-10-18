@@ -3,7 +3,7 @@
   <%= f.label :status_url %><%= f.text_field :status_url %>
   <%= f.fields_for :user do |user_field| %>
   <%= user_field.label :email, "Who Will Own This?" %>
-    <% User.all.each do |user| %>
+    <% User.order("email ASC").each do |user| %>
       <% is_checked = user == @current_user || @web_application.users.include?(user) ? true : false %>
       <label>
         <%= check_box_tag "web_application[user][emails][]", user.email, is_checked %>
