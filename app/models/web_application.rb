@@ -12,6 +12,8 @@ class WebApplication < ActiveRecord::Base
   friendly_id :name, use: :slugged
   attr_accessor :status_checked_at, :resources, :dependencies
 
+  self.per_page = 10
+
   def get_current_status
     begin
       response = get(status_url)
