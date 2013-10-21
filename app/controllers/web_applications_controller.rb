@@ -13,9 +13,9 @@ class WebApplicationsController < ApplicationController
   def index
     @current_user = current_user
     if @current_user.is_admin?
-      @web_applications = WebApplication.all
+      @web_applications = WebApplication.paginate(:page => params[:page])
     else
-      @web_applications = @current_user.web_applications
+      @web_applications = @current_user.web_applications.paginate(:page => params[:page])
     end
   end
 

@@ -25,3 +25,7 @@
     </tr>
   <% end %>
 </table>
+
+<div class="pagination">
+  <%= will_paginate @web_applications, renderer: BootstrapPagination::Rails %>
+<div>

@@ -19,6 +19,7 @@ gem 'turbolinks'
 gem 'pg'
 # Released version is not compatible with rails 4, so have to pull from github :/
 gem 'friendly_id', github: 'norman/friendly_id'
+gem 'will_paginate-bootstrap'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
