@@ -13,4 +13,9 @@ module WebApplicationsHelper
     end
     resource_array
   end
+
+  def get_error_string(web_application, attribute)
+    errors = web_application.errors[attribute].try(:join, ", ")
+    errors.present? ? "- #{errors}": ""
+  end
 end

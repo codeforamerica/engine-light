@@ -1,16 +1,28 @@
 <%= form_for(@web_application) do |f| %>
-  <%= f.label :name, "Web Application Name" %><%= f.text_field :name %>
-  <%= f.label :status_url %><%= f.text_field :status_url %>
-  <%= f.fields_for :user do |user_field| %>
-  <%= user_field.label :email, "Who Will Own This?" %>
-    <% User.order("email ASC").each do |user| %>
-      <% is_checked = user == @current_user || @web_application.users.include?(user) ? true : false %>
-      <label>
-        <%= check_box_tag "web_application[user][emails][]", user.email, is_checked %>
-        <%= user.email %>
-      </label>
+  <% name_errors = get_error_string(@web_application, :name) %>
+  <div class="<%= name_errors.present? ? "control-group error" : "control-group" %>">
+    <div class="controls">
+      <%= f.label :name, "Web Application Name #{name_errors}", class: "control-label" %>
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <% status_url_errors = get_error_string(@web_application, :status_url) %>
+  <div class="<%= status_url_errors.present? ? "control-group error" : "control-group" %>">
+    <%= f.label :status_url, "Status Url #{status_url_errors}", class: "control-label" %><%= f.text_field :status_url %>
+  </div>
+  <% users_errors = get_error_string(@web_application, :users) %>
+  <div class="<%= users_errors.present? ? "control-group error" : "control-group" %>">
+    <%= f.fields_for :user do |user_field| %>
+    <%= user_field.label :email, "Who Will Own This? #{users_errors}", class: "control-label" %>
+      <% User.order("email ASC").each do |user| %>
+        <% is_checked = user == @current_user || @web_application.users.include?(user) ? true : false %>
+        <label>
+          <%= check_box_tag "web_application[user][emails][]", user.email, is_checked %>
+          <%= user.email %>
+        </label>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
   <br>
-  <%= f.submit class: "btn" %>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

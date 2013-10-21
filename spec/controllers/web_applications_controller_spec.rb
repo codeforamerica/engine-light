@@ -138,25 +138,22 @@ describe WebApplicationsController do
       response.should be_redirect
     end
 
-    it "renders the new page and shows a flash message when no users are added to the app" do
+    it "renders the new page when no users are added to the app" do
       status_url = "http://www.example.com/status"
       post :create, {"web_application" => {"name" => "Test Web App", "status_url" => status_url,
                                            "user" => {"emails" => [""]}}}
       response.should render_template(:new)
-      flash.now[:alert].should_not be_nil
     end
 
-    it "renders the new page and shows a flash message when attributes are missing" do
+    it "renders the new page when attributes are missing" do
       post :create, {"web_application" => {"name" => "Test Web App", "user" => {"emails" => [""]}}}
       response.should render_template(:new)
-      flash.now[:alert].should_not be_nil
     end
 
-    it "renders the new page and shows a flash message when the status url does not return a valid response" do
+    it "renders the new page when the status url does not return a valid response" do
       FakeWeb.register_uri(:get, "http://www.example.com/status", :status => ["500", "Internal Server Error"])
       post :create, params
       response.should render_template(:new)
-      flash.now[:alert].should_not be_nil
     end
   end
 
@@ -196,17 +193,15 @@ describe WebApplicationsController do
       response.should be_redirect
     end
 
-    it "renders the edit page and shows a flash message when attributes are invalid" do
+    it "renders the edit page when attributes are invalid" do
       put :update, {"web_application" => {"name" => "", "user" => {"emails" => [""]}}, "id" => web_application.slug}
       response.should render_template(:edit)
-      flash.now[:alert].should_not be_nil
     end
 
-    it "renders the edit page and shows a flash message when the status url does not return a valid response" do
+    it "renders the edit page when the status url does not return a valid response" do
       FakeWeb.register_uri(:get, "http://www.example.com/status", :status => ["500", "Internal Server Error"])
       put :update, params
       response.should render_template(:edit)
-      flash.now[:alert].should_not be_nil
     end
   end
 

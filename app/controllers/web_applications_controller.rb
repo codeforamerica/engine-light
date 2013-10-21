@@ -38,7 +38,6 @@ class WebApplicationsController < ApplicationController
     if @web_application.save
       redirect_to web_applications_path
     else
-      flash.now.alert = "The web application cannot not be added. One or more values entered are invalid."
       render :new
     end
   end
@@ -66,7 +65,6 @@ class WebApplicationsController < ApplicationController
     if @web_application.update_attributes(web_application_params)
       redirect_to web_applications_path
     else
-      flash.now.alert = "The web application cannot not be updated. One or more values entered are invalid."
       render :edit
     end
   end
