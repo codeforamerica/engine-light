@@ -5,10 +5,10 @@
   </head>
   <body>
 
-    <h2>Your application <%= @web_application_name %> is unreachable.</h2>
+    <h2>Your application <%= @web_application.name %> is unreachable.</h2>
 
-    <h3>Status: <%= @web_application_current_status %></h3>
+    <h3>Status: <%= @web_application.current_status %></h3>
 
-    <p>For more information please log into <%= link_to ENV['HOST_NAME'], url_for(host: ENV["HOST_NAME"], controller: "welcome", action: "index") %></p>
+    <p>For more information please log into <%= link_to "Engine Light", url_for(host: ENV["HOST_NAME"], controller: "web_applications", action: "show", id: @web_application.id) %></p>
   </body>
 </html>
