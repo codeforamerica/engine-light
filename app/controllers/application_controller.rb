@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
   def require_login
     if current_user.nil?
       store_target_location
-      puts session[:return_to]
       redirect_to root_url
     else
       redirect_to_target if session[:return_to].present?
