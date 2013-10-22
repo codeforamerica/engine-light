@@ -9,6 +9,6 @@
 
     <h3>Status: <%= @web_application.current_status %></h3>
 
-    <p>For more information please log into <%= link_to "Engine Light", url_for(host: ENV["HOST_NAME"], controller: "web_applications", action: "show", id: @web_application.id) %></p>
+    <p>For more information please log into <%= link_to "Engine Light", url_for(host: ENV["HOST_NAME"], controller: "web_applications", action: "show", id: @web_application.slug) %></p>
   </body>
 </html>
