@@ -40,7 +40,7 @@ describe WebApplicationsController do
       response.should be_success
     end
 
-    it "redirects when the user is not logged in" do
+    it "redirects when the currently logged in user does not own the application" do
       session[:email] = "someone.else@cfa.org"
       get action, params
       response.should be_redirect

@@ -3,22 +3,21 @@
     <div class="container">
       <%= image_tag "/assets/static/check_engine_light.png", id: "brand-icon" %>
       <%= link_to "Engine Light", web_applications_path, {class: "brand"} %>
-      <ul class="nav pull-right">
-        <li>
+      <div class="nav pull-right">
+        <% if @current_user.present? %>
+         <div id="user-account">
+            <span class="icon-white icon-user"></span>
+            <%= link_to @current_user.email, edit_user_path(@current_user) %>
+          </div>
+        <% end %>
+        <form id="navbar-form">
           <% if @current_user.present? %>
-            <p id="user-account-info" class="text-info">
-              <%= @current_user.email %>
-            </p>
+            <input type="button" id="signout" value="Sign out" class="btn btn-default navbar-btn">
+          <% else %>
+            <input type="button" id="signin" value="Sign in" class="btn btn-default navbar-btn">
           <% end %>
-          <form class="navbar-form">
-            <% if @current_user.present? %>
-              <input type="button" id="signout" value="Sign out" class="btn btn-default navbar-btn">
-            <% else %>
-              <input type="button" id="signin" value="Sign in" class="btn btn-default navbar-btn">
-            <% end %>
-          </form>
-        </li>
-      </ul>
+        </form>
+      </div>
     </div>
   </div>
 </div>

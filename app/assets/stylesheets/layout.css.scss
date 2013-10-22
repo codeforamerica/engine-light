@@ -4,18 +4,19 @@
   padding-right: 5px;
 }
 
-.navbar-form {
+#navbar-form {
+  display: inline-block;
   margin-bottom: 0px;
-  float: right;
-}
-
-#user-account-info {
-  float: left;
-  margin: 10px;
+  padding-left: 4px;
 }
 
 #welcome-page {
   margin-right: auto;
   margin-left: auto;
   width: 60%
+}
+
+#user-account {
+  display: inline-block;
+  vertical-align: bottom;
 }

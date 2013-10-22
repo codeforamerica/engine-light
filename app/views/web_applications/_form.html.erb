@@ -18,7 +18,7 @@
         <% is_checked = user == @current_user || @web_application.users.include?(user) ? true : false %>
         <label>
           <%= check_box_tag "web_application[user][emails][]", user.email, is_checked %>
-          <%= user.email %>
+          <%= user_name_or_email(user) %>
         </label>
       <% end %>
     <% end %>

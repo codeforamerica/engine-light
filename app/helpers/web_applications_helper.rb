@@ -1,7 +1,11 @@
 module WebApplicationsHelper
   def owners(web_app, current_user)
-    owners_string = web_app.users.map(&:email).join(" ")
+    owners_string = web_app.users.map { |user| user_name_or_email(user) }.join(", ")
     owners_string.empty? ? "none" : owners_string
+  end
+
+  def user_name_or_email(user)
+    user.name.present? ? user.name : user.email
   end
 
   def resource_list(resource_hash)
