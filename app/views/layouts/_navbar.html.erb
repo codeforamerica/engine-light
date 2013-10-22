@@ -7,7 +7,7 @@
         <% if @current_user.present? %>
          <div id="user-account">
             <span class="icon-white icon-user"></span>
-            <%= link_to @current_user.email, edit_user_path(@current_user) %>
+            <%= link_to @current_user.email, user_path(@current_user) %>
           </div>
         <% end %>
         <form id="navbar-form">

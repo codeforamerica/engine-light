@@ -1,9 +1,32 @@
-<h2><%= user_name_or_email(@user) %></h2>
+<h2>Account Details</h2>
+
 <div class="details">
   <div class="details-label">
-    Owns:
+    Email:
+  </div>
+  <div class="details-value muted">
+    <%= @user.email %>
+  </div>
+</div>
+<div class="details">
+  <div class="details-label">
+    Name:
+  </div>
+  <div class="details-value muted">
+    <%= @user.name.present? ? @user.name : "Not Set" %>
+  </div>
+</div>
+<div class="details">
+  <div class="details-label">
+    Web Applications:
   </div>
   <div class="details-value muted">
     <%= @user.web_applications.map(&:name).join("<br>").html_safe %>
   </div>
+</div>
+<br/>
+<div>
+  <span class="new-or-edit-app icon-edit">
+    <%= link_to "edit", edit_user_path(@user), class: "new-or-edit-app-link" %>
+  </span>
 </div>
