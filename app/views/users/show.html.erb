@@ -1,0 +1,9 @@
+<h2><%= user_name_or_email(@user) %></h2>
+<div class="details">
+  <div class="details-label">
+    Owns:
+  </div>
+  <div class="details-value muted">
+    <%= @user.web_applications.map(&:name).join("<br>").html_safe %>
+  </div>
+</div>
