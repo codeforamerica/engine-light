@@ -62,7 +62,7 @@ describe PersonaController do
       controller.get_identity(assertion).should be_nil      
     end
 
-    it "raises if the post does not return ok" do
+    it "raises if the post does not return an ok response" do
       FakeWeb.register_uri(:post, "https://verifier.login.persona.org/verify", :status => ["500", "Internal Server Error"])
       assertion = "stuff"
       expect { controller.get_identity(assertion) }.to raise_error
