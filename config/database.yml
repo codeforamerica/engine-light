@@ -11,7 +11,7 @@ test:
   adapter: postgresql
   database: engine-light_test
   encoding: unicode
-  username: engine_light
+  username: postgres
   password:
   host: localhost
 
