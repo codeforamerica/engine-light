@@ -33,6 +33,7 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_girl'
   gem 'fakeweb'
+  gem 'rake'
 end
 
 gem 'dotenv-rails', groups: [:development, :test]
