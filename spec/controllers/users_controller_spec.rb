@@ -58,7 +58,7 @@ describe UsersController do
       flash[:notice].should_not be_nil
     end
 
-   it "updates settings even when name is nil" do
+   it "updates settings even when a user's name is nil" do
       put :update, {"id" => user.id, "user" => {"name" => nil}}
       user.reload.name.should be_nil
       flash[:notice].should_not be_nil
