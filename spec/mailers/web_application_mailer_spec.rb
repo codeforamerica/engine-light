@@ -10,14 +10,14 @@ describe WebApplicationMailer do
   end
 
   describe "#outage_notification" do
-    it "sends an email" do
+    it "sends the email" do
       WebApplicationMailer.outage_notification(web_application).deliver
       ActionMailer::Base.deliveries.count.should == 1
     end
   end
 
   describe "#recovery_notification" do
-    it "sends an email" do
+    it "sends the email" do
       WebApplicationMailer.recovery_notification(web_application).deliver
       ActionMailer::Base.deliveries.count.should == 1
     end
