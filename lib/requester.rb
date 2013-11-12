@@ -1,4 +1,3 @@
-require 'net/http'
 require 'json'
 
 module Requester
@@ -7,7 +6,7 @@ module Requester
   def get(uri_string)
     response = HTTParty.get(uri_string, timeout: 5)
     if response.success?
-      JSON.parse(response)
+      JSON.parse response.body
     else
       raise response.response
     end
