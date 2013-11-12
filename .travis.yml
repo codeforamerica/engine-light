@@ -3,6 +3,6 @@ rvm:
   - ruby-2.0.0
 before_script:
   - psql -c 'create database "engine-light_test";' -U postgres
-  webhooks:
-    urls:
+webhooks:
+  urls:
     - http://cfa-project-monitor.herokuapp.com/projects/707eb273-de8f-4125-9f9f-846fb30bd83c/status
