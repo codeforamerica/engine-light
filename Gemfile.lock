@@ -52,6 +52,9 @@ GEM
       activesupport (>= 3.0.0)
     fakeweb (1.3.0)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.5)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -64,6 +67,7 @@ GEM
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.0)
+    multi_xml (0.5.5)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -148,6 +152,7 @@ DEPENDENCIES
   factory_girl
   fakeweb
   friendly_id!
+  httparty
   jquery-rails
   pg
   rails (= 4.0.0)

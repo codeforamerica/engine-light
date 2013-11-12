@@ -29,7 +29,7 @@ describe WebApplication do
 
     context "the get request fails" do
       before do
-        FakeWeb.register_uri(:get, "http://www.codeforamerica.org/.well-known/status", :status => ["500", "Internal Server Error"])
+        FakeWeb.register_uri(:get, status_url, :status => ["500", "Internal Server Error"])
         web_application.get_current_status
       end
 

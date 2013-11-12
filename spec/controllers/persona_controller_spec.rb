@@ -40,6 +40,7 @@ describe PersonaController do
   end
 
   describe "#get_identity" do
+    let(:uri_string) { "https://verifier.login.persona.org/verify?assertion=stuff&audience=http%3A%2F%2Ftest.host" }
     it "returns an email address when mozilla confirms the identity assertion" do
       response_body = <<-eos 
               {
@@ -50,20 +51,20 @@ describe PersonaController do
               "issuer": "cfa.org"
              }
              eos
-      FakeWeb.register_uri(:post, "https://verifier.login.persona.org/verify", body: response_body)
+      FakeWeb.register_uri(:post, uri_string, body: response_body)
       assertion = "stuff"
       controller.get_identity(assertion).should == "erica@cfa.org"
     end
 
     it "returns nil when mozilla rejects the identity assertion" do
       response_body = "{}"
-      FakeWeb.register_uri(:post, "https://verifier.login.persona.org/verify", body: response_body)
+      FakeWeb.register_uri(:post, uri_string, body: response_body)
       assertion = "stuff"
       controller.get_identity(assertion).should be_nil      
     end
 
     it "raises if the post does not return an ok response" do
-      FakeWeb.register_uri(:post, "https://verifier.login.persona.org/verify", :status => ["500", "Internal Server Error"])
+      FakeWeb.register_uri(:post, uri_string, :status => ["500", "Internal Server Error"])
       assertion = "stuff"
       expect { controller.get_identity(assertion) }.to raise_error
     end
