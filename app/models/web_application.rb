@@ -35,6 +35,10 @@ class WebApplication < ActiveRecord::Base
 
 private
 
+  def need_some_meows?
+    true
+  end
+
   def status_url_is_valid?
     begin
       get(status_url)
