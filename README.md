@@ -16,3 +16,28 @@ Uses Mozilla Persona to handle login. The app will only allow users with CfA ema
 - [Ohana API](https://github.com/codeforamerica/ohana-api/blob/master/app/controllers/status_controller.rb)
 - [Human Services Finder](https://github.com/codeforamerica/human_services_finder/blob/master/app/controllers/status_controller.rb)
 - [Trailsy Server](https://github.com/codeforamerica/trailsyserver/blob/master/app/controllers/status_controller.rb)
+
+## Setup
+
+Engine Light is a ruby on rails app
+
+###Prerequisites
+
+#### Git, Ruby 2.0.0+, Rails 4+, PostgreSQL
+
+### Clone the app on your local machine:
+
+    git clone git://github.com/codeforamerica/engine-light.git
+    cd engine-light
+
+### Bundle
+
+    bundle install
+
+### Setup DB
+
+    rake db:setup
+
+### Start the server
+
+    foreman start
