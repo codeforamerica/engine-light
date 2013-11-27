@@ -30,8 +30,12 @@ a
 #navbar h1
 {
   float: left;
-  color: white;
   margin: 0;
+}
+
+#navbar h1, #navbar h1 a
+{
+  color: white;
 }
 
 #navbar form

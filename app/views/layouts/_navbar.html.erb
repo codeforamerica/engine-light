@@ -1,5 +1,5 @@
 <div id="navbar">
-  <h1>Engine Light</h1>
+  <h1><%= link_to 'Engine Light', web_applications_path %></h1>
 
   <% if @current_user.present? %>
     <%= link_to @current_user.email, user_path(@current_user) %>
