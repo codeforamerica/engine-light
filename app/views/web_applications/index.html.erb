@@ -15,7 +15,7 @@
     <% row_class = web_app.current_status == "ok" ? "success" : "error" %>
     <tr class="<%= row_class %>">
       <td class="status"><%= web_app.current_status == "ok" ? "v" : "x" %></td>
-      <td class="name"><%= link_to web_app.name, web_application_path(web_app), {class: "name"} %></td>
+      <td class="name"><%= link_to web_app.name, web_application_path(web_app) %></td>
       <td><%= link_to web_app.root_url, web_app.root_url %></td>
       <td><%= owners(web_app, @current_user) %></td>
       <td>
@@ -25,6 +25,4 @@
   <% end %>
 </table>
 
-<div class="pagination">
-  <%= will_paginate @web_applications, renderer: BootstrapPagination::Rails %>
-<div>
+<%= will_paginate @web_applications %>

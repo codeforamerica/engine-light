@@ -23,7 +23,7 @@ a
   padding: 10px 45px 10px;
   text-align: right;
   height: 35px;
-  color: gray;
+  color: #999;
 }
 
 #navbar h1
@@ -41,7 +41,7 @@ a
 #navbar a,
 #navbar input[type="button"]
 {
-  color: #3b8bce;
+  color: #6EBEFF;
 }
 
 #navbar input[type="button"]
@@ -52,8 +52,6 @@ a
   padding: 0;
   margin: 0;
 }
-
-
 
 #sub-head
 {
@@ -81,6 +79,7 @@ table
 {
   border-collapse: collapse;
   color: #333;
+  width: 100%;
 }
 
 table tr th,
@@ -112,9 +111,15 @@ table tr td a
   white-space: nowrap;
 }
 
-table tr td a.name
+table tr td.name
+{
+  min-width: 200px;
+}
+
+table tr td.name a
 {
   color: black;
+  white-space: normal;
 }
 
 table tr td a.edit
@@ -151,4 +156,32 @@ table tr td.name
   color: black;
   font-weight: bold;
   padding: 20px 60px 20px 40px;
+}
+
+.pagination
+{
+  margin-top: 20px;
+  text-align: right;
+}
+
+.pagination .previous_page
+{
+   padding-right: 16px;
+}
+
+.pagination .next_page
+{
+   padding-left: 16px;
+}
+
+.pagination em
+{
+  font-weight: bold;
+  font-style: normal;
+  color: black;
+}
+
+.pagination a
+{
+  color: #303030;
 }
