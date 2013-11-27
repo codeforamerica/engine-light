@@ -1,7 +1,10 @@
 module WebApplicationsHelper
   def owners(web_app, current_user)
-    owners_string = web_app.users.map { |user| user_name_or_email(user) }.join(", ")
-    owners_string.empty? ? "none" : owners_string
+    owners_html =
+    web_app.users.map do |user|
+      '<a>' + user_name_or_email(user) + '</a>'
+    end
+    owners_html.join(", ").html_safe
   end
 
   def user_name_or_email(user)

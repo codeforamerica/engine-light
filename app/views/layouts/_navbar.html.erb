@@ -1,23 +1,15 @@
-<div class="navbar navbar-static-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= image_tag "/assets/static/check_engine_light.png", id: "brand-icon" %>
-      <%= link_to "Engine Light", web_applications_path, {class: "brand"} %>
-      <div class="nav pull-right">
-        <% if @current_user.present? %>
-         <div id="user-account">
-            <span class="icon-white icon-user"></span>
-            <%= link_to @current_user.email, user_path(@current_user) %>
-          </div>
-        <% end %>
-        <form id="navbar-form">
-          <% if @current_user.present? %>
-            <input type="button" id="signout" value="Sign out" class="btn btn-default navbar-btn">
-          <% else %>
-            <input type="button" id="signin" value="Sign in" class="btn btn-default navbar-btn">
-          <% end %>
-        </form>
-      </div>
-    </div>
-  </div>
+<div id="navbar">
+  <h1>Engine Light</h1>
+
+  <% if @current_user.present? %>
+    <%= link_to @current_user.email, user_path(@current_user) %>
+    |
+  <% end %>
+  <form id="navbar-form">
+    <% if @current_user.present? %>
+      <input type="button" id="signout" value="Sign out">
+    <% else %>
+      <input type="button" id="signin" value="Sign in">
+    <% end %>
+  </form>
 </div>

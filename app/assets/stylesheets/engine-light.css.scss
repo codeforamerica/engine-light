@@ -1,0 +1,154 @@
+body
+{
+  color: black;
+  margin: 45px;
+}
+
+body, input[type="button"]
+{
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+a
+{
+  color: black;
+  text-decoration: none;
+}
+
+#navbar
+{
+  background-color: black;
+  margin: -45px -45px auto -45px;
+  padding: 10px 45px 10px;
+  text-align: right;
+  height: 35px;
+  color: gray;
+}
+
+#navbar h1
+{
+  float: left;
+  color: white;
+  margin: 0;
+}
+
+#navbar form
+{
+  padding: 10px 0;
+}
+
+#navbar a,
+#navbar input[type="button"]
+{
+  color: #3b8bce;
+}
+
+#navbar input[type="button"]
+{
+  border: none;
+  background-color: black;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+#sub-head
+{
+  margin: 30px 0;
+}
+
+#sub-head h2
+{
+  display: inline;
+}
+
+#sub-head a.new
+{
+  color: #3b8bce;
+  padding-left: 10px;
+}
+
+/*
+ * For the moment, we think there is only one table on the site: the list of apps.
+ *
+ * This is that table.
+ */
+
+table
+{
+  border-collapse: collapse;
+  color: #333;
+}
+
+table tr th,
+table tr td
+{
+  border-bottom: 1px solid #a9a8a8;
+  text-align: left;
+}
+
+table tr th
+{
+  color: black;
+  padding-bottom: 8px;
+  font-weight: normal;
+  font-size: 80%;
+}
+
+table tr td
+{
+  background-color: #f5f5f4;
+  vertical-align: middle;
+  padding-left: 0;
+  padding-right: 40px;
+}
+
+table tr td a
+{
+  color: #303030;
+  white-space: nowrap;
+}
+
+table tr td a.name
+{
+  color: black;
+}
+
+table tr td a.edit
+{
+  color: #3b8bce;
+}
+
+table tr td.status
+{
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table tr.success td.status
+{
+  color: #74a98a;
+  background-color: #acd5ba;
+}
+
+table tr.error td.status
+{
+  color: #be4b56;
+  background-color: #f76068;
+}
+
+table tr th.name
+{
+  padding-left: 40px;
+}
+
+table tr td.name
+{
+  color: black;
+  font-weight: bold;
+  padding: 20px 60px 20px 40px;
+}
