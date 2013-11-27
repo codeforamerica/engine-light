@@ -1,46 +1,32 @@
-<h2><%= @web_application.name %></h2>
-<div class="details">
-  <div class="details-label">
-    Status:
-  </div>
-  <% status = @web_application.current_status == "ok" ? "success" : "error" %>
-  <div class="details-value text-<%= status %>">
-    <%= @web_application.current_status %>
-  </div>
+<div id="sub-head">
+  <h2><%= @web_application.name %></h2>
+  <%= link_to "edit", edit_web_application_path(@web_application), class: "edit" %>
+  <p>
+    <%= link_to @web_application.root_url, @web_application.root_url %>
+  </p>
 </div>
-<% if @web_application.status_checked_at.present? %>
-  <div class="details">
-    <div class="details-label">
-      Time of status check:
-    </div>
-    <div class="details-value muted">
-      <%= @web_application.status_checked_at %>
-    </div>
-  </div>
-<% end %>
-<% if @web_application.resources.present? %>
-  <div class="details">
-    <div class="details-label">
-      Resources:
-    </div>
-    <div class="details-value muted">
-      <%= resource_list(@web_application.resources).join("<br>").html_safe %>
-    </div>
-  </div>
-<% end %>
-<% if @web_application.dependencies.present? %>
-  <div class="details">
-    <div class="details-label">
-      Dependencies:
-    </div>
-    <div class="details-value muted">
-      <%= @web_application.dependencies.join("<br>").html_safe %>
-    </div>
-  </div>
-<% end %>
-<br>
-<div>
-  <span class="new-or-edit-app icon-edit">
-    <%= link_to "edit", edit_web_application_path(@web_application), class: "new-or-edit-app-link" %>
-  </span>
-</div>
+
+<table id="one-app">
+  <tr>
+    <td>
+      <h3>Status</h3>
+      <p>[<%= @web_application.current_status == "ok" ? "picture of green engine" : "picture of red engine" %>]</p>
+      <p>
+        <%= @web_application.current_status %>
+        as of <span style="white-space: nowrap"><%= @web_application.status_checked_at.strftime('%m/%d/%Y %H:%M %Z') %></span>
+      </p>
+    </td>
+    <td>
+      <h3>Dependencies</h3>
+      <%= dependencies_list(@web_application.dependencies) %>
+    </td>
+    <td>
+      <h3>Resources</h3>
+      <%= resource_list(@web_application.resources) %>
+    </td>
+    <td>
+      <h3>Owners</h3>
+      <%= owners_list(@web_application.users) %>
+    </td>
+  </tr>
+</table>

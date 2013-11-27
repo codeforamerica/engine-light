@@ -185,3 +185,38 @@ table#apps-list tr td.name
 {
   color: #303030;
 }
+
+/*
+ * This table lives on the /web_applications page.
+ */
+
+table#one-app
+{
+  border-spacing: 20px;
+  margin: -20px;
+  color: #333;
+  width: 100%;
+}
+
+table#one-app tr td
+{
+  width: 25%;
+  vertical-align: top;
+  text-align: center;
+  background-color: #f5f5f4;
+  padding-bottom: 40px;
+}
+
+table#one-app tr td ul
+{
+  list-style: none;
+  padding-left: 0;
+}
+
+table#one-app tr td dd
+{
+  margin-left: 0;
+  margin-bottom: 8px;
+  font-size: 22px;
+  font-weight: bold;
+}
