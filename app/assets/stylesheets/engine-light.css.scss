@@ -8,6 +8,7 @@ body, input[type="button"]
 {
   font-family: sans-serif;
   font-size: 16px;
+  line-height: 24px;
 }
 
 a
@@ -63,33 +64,32 @@ a
   display: inline;
 }
 
-#sub-head a.new
+#sub-head a.new,
+#sub-head a.edit
 {
   color: #3b8bce;
   padding-left: 10px;
 }
 
 /*
- * For the moment, we think there is only one table on the site: the list of apps.
- *
- * This is that table.
+ * This table lives on the /web_applications page.
  */
 
-table
+table#apps-list
 {
   border-collapse: collapse;
   color: #333;
   width: 100%;
 }
 
-table tr th,
-table tr td
+table#apps-list tr th,
+table#apps-list tr td
 {
   border-bottom: 1px solid #a9a8a8;
   text-align: left;
 }
 
-table tr th
+table#apps-list tr th
 {
   color: black;
   padding-bottom: 8px;
@@ -97,7 +97,7 @@ table tr th
   font-size: 80%;
 }
 
-table tr td
+table#apps-list tr td
 {
   background-color: #f5f5f4;
   vertical-align: middle;
@@ -105,53 +105,53 @@ table tr td
   padding-right: 40px;
 }
 
-table tr td a
+table#apps-list tr td a
 {
   color: #303030;
   white-space: nowrap;
 }
 
-table tr td.name
+table#apps-list tr td.name
 {
   min-width: 200px;
 }
 
-table tr td.name a
+table#apps-list tr td.name a
 {
   color: black;
   white-space: normal;
 }
 
-table tr td a.edit
+table#apps-list tr td a.edit
 {
   color: #3b8bce;
 }
 
-table tr td.status
+table#apps-list tr td.status
 {
   text-align: center;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-table tr.success td.status
+table#apps-list tr.success td.status
 {
   color: #74a98a;
   background-color: #acd5ba;
 }
 
-table tr.error td.status
+table#apps-list tr.error td.status
 {
   color: #be4b56;
   background-color: #f76068;
 }
 
-table tr th.name
+table#apps-list tr th.name
 {
   padding-left: 40px;
 }
 
-table tr td.name
+table#apps-list tr td.name
 {
   color: black;
   font-weight: bold;
