@@ -16,14 +16,18 @@
         as of <span style="white-space: nowrap"><%= @web_application.status_checked_at.strftime('%m/%d/%Y %H:%M %Z') %></span>
       </p>
     </td>
-    <td>
-      <h3>Dependencies</h3>
-      <%= dependencies_list(@web_application.dependencies) %>
-    </td>
-    <td>
-      <h3>Resources</h3>
-      <%= resource_list(@web_application.resources) %>
-    </td>
+    <% if @web_application.dependencies.present? %>
+      <td>
+        <h3>Dependencies</h3>
+        <%= dependencies_list(@web_application.dependencies) %>
+      </td>
+    <% end %>
+    <% if @web_application.resources.present? %>
+      <td>
+        <h3>Resources</h3>
+        <%= resource_list(@web_application.resources) %>
+      </td>
+    <% end %>
     <td>
       <h3>Owners</h3>
       <%= owners_list(@web_application.users) %>
