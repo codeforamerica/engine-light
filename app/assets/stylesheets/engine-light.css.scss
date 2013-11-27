@@ -6,8 +6,8 @@ body
 
 body, input[type="button"]
 {
-  font-family: sans-serif;
-  font-size: 16px;
+  font-family: 'Gotham A', 'Gotham B', Arial, Helvetica, sans-serif;
+  font-size: 14px;
   line-height: 24px;
 }
 
@@ -29,6 +29,8 @@ a
 
 #navbar h1
 {
+  font-size: 20px;
+  font-weight: normal;
   float: left;
   margin: 0;
 }
@@ -66,6 +68,12 @@ a
 #sub-head h2
 {
   display: inline;
+  font-size: 20px;
+}
+
+#sub-head.one-app h2
+{
+  font-size: 28px;
 }
 
 #sub-head a.new,
@@ -98,7 +106,6 @@ table#apps-list tr th
   color: black;
   padding-bottom: 8px;
   font-weight: normal;
-  font-size: 80%;
 }
 
 table#apps-list tr td
@@ -118,6 +125,7 @@ table#apps-list tr td a
 table#apps-list tr td.name
 {
   min-width: 200px;
+  font-size: 16px;
 }
 
 table#apps-list tr td.name a
