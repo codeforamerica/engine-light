@@ -38,6 +38,12 @@ Engine Light is a ruby on rails app
 
     rake db:setup
 
+### Install foreman
+
+    gem install foreman
+
+See [Heroku Local Workstation Setup](https://devcenter.heroku.com/articles/getting-started-with-rails4#local-workstation-setup) for more info.
+
 ### Start the server
 
     foreman start
