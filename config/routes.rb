@@ -5,6 +5,7 @@ EngineLight::Application.routes.draw do
   resources :web_applications
   resources :users
 
+  get 'about' => 'static#about'
   post 'persona/login' => 'persona#login'
   post 'persona/logout' => 'persona#logout'
 

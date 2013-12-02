@@ -1,8 +1,10 @@
 <div id="navbar">
-  <h1><%= link_to 'Engine Light', web_applications_path %></h1>
+  <h1><%= link_to 'Engine Light', root_path %></h1>
 
   <% if @current_user.present? %>
     <%= link_to @current_user.email, user_path(@current_user) %>
+    |
+    <%= link_to 'Apps', web_applications_path %>
     |
   <% end %>
   <form id="navbar-form">
@@ -13,3 +15,15 @@
     <% end %>
   </form>
 </div>
+
+<script type="text/javascript">
+  var signinLink = document.getElementById('signin');
+  if (signinLink) {
+    signinLink.onclick = function() { navigator.id.request(); };
+  }
+
+  var signoutLink = document.getElementById('signout');
+  if (signoutLink) {
+    signoutLink.onclick = function() { navigator.id.logout(); };
+  }
+</script>

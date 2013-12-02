@@ -1,4 +1,62 @@
 <div id="welcome-page">
-  <h2>Monitoring Your Applications, Guys</h2>
-  <img alt="monitor" src="/assets/static/monitor.png" />
+  <h2>Monitoring Your Web Applications, Guys</h2>
+
+  <% if @current_user.present? %>
+
+    <form>
+      <p>
+        Logged in as <%= @current_user.email %>.
+        <%= link_to 'See your web applications', web_applications_path %>.
+      </p>
+
+      <input type="button" id="main-signout" value="Sign out" />
+    </form>
+
+    <script type="text/javascript">
+      var signoutLink = document.getElementById('main-signout');
+      if (signoutLink) {
+        signoutLink.onclick = function() { navigator.id.logout(); };
+      }
+    </script>
+
+  <% else %>
+
+    <form>
+      <input type="button" id="main-signin" value="Sign in" />
+    </form>
+
+    <script type="text/javascript">
+      var signinLink = document.getElementById('main-signin');
+      if (signinLink) {
+        signinLink.onclick = function() { navigator.id.request(); };
+      }
+    </script>
+
+  <% end %>
+
+  <h3>What is Engine Light?</h3>
+
+  <p>
+  <a href="http://github.com/codeforamerica">CfA has lots of projects</a>. These projects are written in different languages, hosted in different places, and have different levels of complexity.
+  </p>
+
+  <p>
+  Engine Light surfaces a small set of app details and monitors an app’s state. This basic set of functionality lets users know if an app is okay or not.
+  </p>
+
+  <p>
+  To display app information or check the app’s state, Engine Light fetches JSON via the app’s status API endpoint from <code><%= link_to '/.well-known/status', about_path %></code>. Here’s an example of what a JSON response would look like:
+  </p>
+
+<pre style="margin-left: 1em">{
+  "status": "ok",
+  "updated": 1380064049,
+  "dependencies": [ "Postgres", "Sendgrid" ],
+  "resources": { "Sendgrid": 17.85 }
+}</pre>
+
+  <p>
+  <var>Status</var> may contain either "ok" or an error message. The app determines what an errored state is. <var>Updated</var> is a unix timestamp indicating when the status check occurred by the app. <var>Dependencies</var> are third party services the app uses and <var>resources</var> are third party services or data stores with usage limitations. An app sends current resource usage information as a percentage.
+  </p>
+
 </div>

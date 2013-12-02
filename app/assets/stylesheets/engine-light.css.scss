@@ -14,7 +14,6 @@ body, input[type="button"]
 a
 {
   color: black;
-  text-decoration: none;
 }
 
 #navbar
@@ -30,6 +29,7 @@ a
 #navbar h1
 {
   font-size: 20px;
+  line-height: 40px;
   font-weight: normal;
   float: left;
   margin: 0;
@@ -49,6 +49,7 @@ a
 #navbar input[type="button"]
 {
   color: #6EBEFF;
+  text-decoration: none;
 }
 
 #navbar input[type="button"]
@@ -81,6 +82,34 @@ a
 {
   color: #3b8bce;
   padding-left: 10px;
+  text-decoration: none;
+}
+
+#welcome-page h2,
+#welcome-page form
+{
+  text-align: center;
+}
+
+#welcome-page form
+{
+  margin-bottom: 4em;
+}
+
+#welcome-page input[type="button"]
+{
+  font-size: 300%;
+  line-height: 120%;
+  border-radius: 10px;
+  padding: .2em .5em;
+  background-color: #3b8bce;
+  cursor: pointer;
+  color: white;
+  border: none;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
 }
 
 /*
