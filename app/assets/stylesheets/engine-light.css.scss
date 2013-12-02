@@ -31,8 +31,13 @@ a
   font-size: 20px;
   line-height: 40px;
   font-weight: normal;
-  float: left;
   margin: 0;
+  padding-left: 10px;
+}
+
+#navbar img, h1
+{
+  float: left;
 }
 
 #navbar h1, #navbar h1 a
