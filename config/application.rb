@@ -20,14 +20,5 @@ module EngineLight
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
-
-    config.serve_static_assets = true
-
-    config.assets.compile = true
-    config.assets.enabled = true
-    config.assets.version = '1.1'
-    config.assets.initialize_on_precompile = false
-    config.assets.paths << Rails.root.join('app','assets', 'fonts')
-    config.assets.precompile += %w( .svg .eot .woff .ttf)
   end
 end
