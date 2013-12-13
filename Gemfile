@@ -35,6 +35,7 @@ group :test do
   gem 'factory_girl'
   gem 'fakeweb'
   gem 'rake'
+  gem 'timecop'
 end
 
 gem 'dotenv-rails', groups: [:development, :test]

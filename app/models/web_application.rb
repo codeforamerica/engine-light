@@ -19,6 +19,7 @@ class WebApplication < ActiveRecord::Base
       response = get(status_url)
     rescue
       self.current_status = "down"
+      @status_checked_at = Time.now.utc
       return
     end
     self.current_status = response.try(:[], "status")

@@ -29,6 +29,7 @@ describe WebApplication do
 
     context "the get request fails" do
       before do
+        Timecop.freeze
         FakeWeb.register_uri(:get, status_url, :status => ["500", "Internal Server Error"])
         web_application.get_current_status
       end
@@ -37,10 +38,13 @@ describe WebApplication do
         web_application.current_status.should == "down"
       end
 
-      it "does not set any status attributes" do
-        web_application.status_checked_at.should be_nil
+      it "does not set resources or dependencies" do
         web_application.resources.should be_nil
         web_application.dependencies.should be_nil
+      end
+
+      it "sets the status checked at time to when the check was performed" do
+        web_application.status_checked_at.should == Time.now.utc
       end
     end
   end
