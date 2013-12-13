@@ -7,11 +7,11 @@
 @font-face
 {
 font-family: 'Entypo';
-src: url('/assets/entypo.eot');
-src: url('/assets/entypo.eot?iefix') format('eot'),
-     url('/assets/entypo.woff') format('woff'),
-     url('/assets/entypo.ttf') format('truetype'),
-     url('/assets/entypo.svg#webfont') format('svg');
+src: font-url('/assets/entypo.eot');
+src: font-url('/assets/entypo.eot?iefix') format('eot'),
+     font-url('/assets/entypo.woff') format('woff'),
+     font-url('/assets/entypo.ttf') format('truetype'),
+     font-url('/assets/entypo.svg#webfont') format('svg');
 }
 
 
