@@ -6,7 +6,6 @@ class WebApplication < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :users
   validate :status_url_is_valid?, if: "status_url.present?"
-  before_save :get_current_status
   has_many :users, through: :user_web_applications, autosave: true
   has_many :user_web_applications
   friendly_id :name, use: :slugged
@@ -35,11 +34,6 @@ class WebApplication < ActiveRecord::Base
   end
 
 private
-
-  def need_some_meows?
-    true
-  end
-
   def status_url_is_valid?
     begin
       get(status_url)

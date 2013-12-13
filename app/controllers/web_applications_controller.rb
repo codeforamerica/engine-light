@@ -35,6 +35,8 @@ class WebApplicationsController < ApplicationController
         end
       end
     end
+
+    @web_application.get_current_status
     if @web_application.save
       redirect_to web_applications_path
     else
@@ -61,8 +63,10 @@ class WebApplicationsController < ApplicationController
       end
     end
     @web_application.users = web_application_users
+    @web_application.attributes = web_application_params
+    @web_application.get_current_status
 
-    if @web_application.update_attributes(web_application_params)
+    if @web_application.save
       redirect_to web_applications_path
     else
       render :edit
