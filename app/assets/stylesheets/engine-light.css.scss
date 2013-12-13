@@ -184,6 +184,7 @@ table#apps-list tr td.status
 
 table#apps-list tr.success td.status
 {
+  font-family: Entypo;
   font-size: 300%;
   color: #74a98a;
   background-color: #acd5ba;
@@ -191,6 +192,7 @@ table#apps-list tr.success td.status
 
 table#apps-list tr.error td.status
 {
+  font-family: Entypo;
   color: #be4b56;
   background-color: #f76068;
 }
