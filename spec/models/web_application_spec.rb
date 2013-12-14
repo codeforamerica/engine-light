@@ -34,8 +34,8 @@ describe WebApplication do
         web_application.get_current_status
       end
 
-      it "sets current status to 'down' when the get request is unsuccessful" do
-        web_application.current_status.should == "down"
+      it "sets current status to 'application unreachable' when the get request is unsuccessful" do
+        web_application.current_status.should == "application unreachable"
       end
 
       it "does not set resources or dependencies" do

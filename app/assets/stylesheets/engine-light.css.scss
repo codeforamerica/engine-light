@@ -276,3 +276,27 @@ table#one-app tr td dd
   font-size: 22px;
   font-weight: bold;
 }
+
+table#app-status-list
+{
+  margin-top: 20px;
+  background-color: #f5f5f4;
+  padding: 10px;
+}
+
+table#app-status-list tr th.status,
+table#app-status-list tr td.status,
+{
+  padding-right: 25px;
+}
+
+table#app-status-list tr th
+{
+  text-align: left;
+}
+
+table#app-status-list tr th#status_log
+{
+  text-align: center;
+  border-bottom: 1px solid black;
+}

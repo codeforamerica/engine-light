@@ -68,6 +68,9 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.0)
     multi_xml (0.5.5)
+    paper_trail (3.0.0)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -155,6 +158,7 @@ DEPENDENCIES
   friendly_id!
   httparty
   jquery-rails
+  paper_trail (~> 3.0.0)
   pg
   rails (= 4.0.0)
   rails_12factor

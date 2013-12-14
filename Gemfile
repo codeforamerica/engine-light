@@ -17,6 +17,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks'
 
 gem 'pg'
+gem 'paper_trail', '~> 3.0.0'
+
 # Released version is not compatible with rails 4, so have to pull from github :/
 gem 'friendly_id', github: 'norman/friendly_id'
 gem 'will_paginate-bootstrap'

@@ -1,6 +1,7 @@
 class WebApplication < ActiveRecord::Base
   include Requester
   extend FriendlyId
+  has_paper_trail only: [:current_status]
 
   validates_presence_of :name, :status_url
   validates_uniqueness_of :name
@@ -17,7 +18,7 @@ class WebApplication < ActiveRecord::Base
     begin
       response = get(status_url)
     rescue
-      self.current_status = "down"
+      self.current_status = "application unreachable"
       @status_checked_at = Time.now.utc
       return
     end
