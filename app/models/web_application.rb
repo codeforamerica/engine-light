@@ -35,6 +35,7 @@ class WebApplication < ActiveRecord::Base
 
 private
   def status_url_is_valid?
+    return if status_url == status_url_was
     begin
       get(status_url)
     rescue

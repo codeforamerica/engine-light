@@ -159,14 +159,20 @@ describe WebApplicationsController do
 
   describe "#update" do
     let(:status_url)      { "http://www.example.com/status" }
+    let(:new_status_url)  { "http://www.secondexample.com/status" }
     let(:web_application) { FactoryGirl.create(:web_application_with_user, status_url: status_url,
                                                name: "Test Application") }
     let(:current_user)    { web_application.users.first }
     let(:params)          { {"web_application" => {"name" => "Meow Test Web App", 
-                                                   "status_url" => status_url,
+                                                   "status_url" => new_status_url,
                                                    "user" => {"emails" => [current_user.email]}},
                                                    "id" => web_application.slug} }
-    before { controller.stub(:current_user).and_return(current_user) }
+
+    before do
+      controller.stub(:current_user).and_return(current_user)
+      body_string = "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":null,\"resources\":null}"
+      FakeWeb.register_uri(:get, new_status_url, body: body_string)
+    end
 
     it "updates a web application belonging to the current user" do
       put :update, params
@@ -199,7 +205,7 @@ describe WebApplicationsController do
     end
 
     it "renders the edit page when the status url does not return a valid response" do
-      FakeWeb.register_uri(:get, "http://www.example.com/status", :status => ["500", "Internal Server Error"])
+      FakeWeb.register_uri(:get, new_status_url, :status => ["500", "Internal Server Error"])
       put :update, params
       response.should render_template(:edit)
     end

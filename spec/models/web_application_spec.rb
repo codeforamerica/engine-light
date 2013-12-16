@@ -62,9 +62,17 @@ describe WebApplication do
       expect{ web_application.users << user }.to raise_error(ActiveRecord::RecordNotUnique)
     end
 
-    it "cannot have an invalid status url" do
+    it "it considers a status url invalid if it has changed and is unreachable" do
+      status_url = "http://idontwork.com"
+      web_application.status_url = status_url
       FakeWeb.register_uri(:get, status_url, status: ["500", "Internal Server Error"])
       web_application.should_not be_valid
+    end
+
+    it "does considers a status url valid if it has not changed and is unreachable" do
+      web_application = FactoryGirl.create(:web_application_with_user, status_url: status_url)
+      FakeWeb.register_uri(:get, status_url, status: ["500", "Internal Server Error"])
+      web_application.should be_valid
     end
   end
 end
