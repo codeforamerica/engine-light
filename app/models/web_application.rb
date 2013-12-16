@@ -3,9 +3,8 @@ class WebApplication < ActiveRecord::Base
   extend FriendlyId
   has_paper_trail only: [:current_status]
 
-  validates_presence_of :name, :status_url
+  validates_presence_of :name, :status_url, :users
   validates_uniqueness_of :name
-  validates_presence_of :users
   validate :status_url_is_valid?, if: "status_url.present?"
   has_many :users, through: :user_web_applications, autosave: true
   has_many :user_web_applications
