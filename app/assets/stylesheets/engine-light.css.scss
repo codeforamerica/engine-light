@@ -307,7 +307,7 @@ table#app-status-list tr th#status_log
 
  form #container
  {
-  margin-left: -350px;
+  margin-left: -420px;
   float: right;
   width: 100%;
  }
@@ -325,7 +325,7 @@ form #inputs
 
 form #inputs input
 {
-  width: 140px;
+  width: 220px;
 }
 
 form #inputs .field_with_errors,
@@ -335,7 +335,7 @@ form #labels .field_with_errors
 }
 
 form #errors{
-  margin-left: 350px;
+  margin-left: 430px;
 }
 
 form #errors p
