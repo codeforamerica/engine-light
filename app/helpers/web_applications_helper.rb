@@ -39,6 +39,6 @@ module WebApplicationsHelper
 
   def get_error_string(web_application, attribute)
     errors = web_application.errors[attribute].try(:join, ", ")
-    errors.present? ? "- #{errors}": ""
+    errors.present? ? "#{errors}": ""
   end
 end

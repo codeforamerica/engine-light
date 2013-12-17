@@ -300,3 +300,89 @@ table#app-status-list tr th#status_log
   text-align: center;
   border-bottom: 1px solid black;
 }
+
+/*
+ * This form lives on new and edit pages
+ */
+
+ form #container
+ {
+  margin-left: -350px;
+  float: right;
+  width: 100%;
+ }
+
+form #labels
+{
+  width: 200px;
+  float: left;
+}
+
+form #inputs
+{
+  float: left;
+}
+
+form #inputs input
+{
+  width: 140px;
+}
+
+form #inputs .field_with_errors,
+form #labels .field_with_errors
+{
+  display: inline;
+}
+
+form #errors{
+  margin-left: 350px;
+}
+
+form #errors p
+{
+  color: #cf1b41;
+  margin: 0;
+}
+
+form #user-list
+{
+  padding: 10px 0;
+  clear: both;
+}
+
+form #user-list #user-error
+{
+  color: #cf1b41;
+}
+
+form.web-app input[type="submit"],
+{
+  font-size: 110%;
+  line-height: 120%;
+  border-radius: 10px;
+  padding: .2em .5em;
+  background-color: #3b8bce;
+  cursor: pointer;
+  color: white;
+  border: none;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+}
+
+form#web-app-delete input[type="submit"]
+{
+  font-size: 110%;
+  line-height: 120%;
+  border-radius: 10px;
+  padding: .2em .5em;
+  background-color: #cf1b41;
+  cursor: pointer;
+  color: white;
+  border: none;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+}
