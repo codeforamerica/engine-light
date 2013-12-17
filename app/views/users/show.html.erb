@@ -24,9 +24,6 @@
     <%= @user.web_applications.map(&:name).join("<br>").html_safe %>
   </div>
 </div>
-<br/>
 <div>
-  <span class="new-or-edit-app icon-edit">
-    <%= link_to "edit", edit_user_path(@user), class: "new-or-edit-app-link" %>
-  </span>
+  <%= link_to "edit", edit_user_path(@user), class: "new-or-edit-app-link" %>
 </div>

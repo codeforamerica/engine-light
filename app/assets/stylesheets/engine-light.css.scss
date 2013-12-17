@@ -355,7 +355,7 @@ form #user-list #user-error
   color: #cf1b41;
 }
 
-form.web-app input[type="submit"],
+form.web-app input[type="submit"]
 {
   font-size: 110%;
   line-height: 120%;
@@ -378,6 +378,52 @@ form#web-app-delete input[type="submit"]
   border-radius: 10px;
   padding: .2em .5em;
   background-color: #cf1b41;
+  cursor: pointer;
+  color: white;
+  border: none;
+
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+}
+
+/*
+ * User show page
+ */
+
+.details
+{
+  font-size: 16px;
+}
+
+.details-label, .details-value
+{
+  display: inline-block;
+}
+
+.details-label
+{
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.new-or-edit-app-link
+{
+  color: #3b8bce;
+}
+
+/*
+ * User edit page
+ */
+
+ form#user input[type="submit"]
+{
+  margin-top: 10px;
+  font-size: 110%;
+  line-height: 120%;
+  border-radius: 10px;
+  padding: .2em .5em;
+  background-color: #3b8bce;
   cursor: pointer;
   color: white;
   border: none;

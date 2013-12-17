@@ -1,8 +1,9 @@
 <h2>User Account Settings</h2>
 
-<%= form_for(@user, html: {class: "form-inline"}) do |f| %>
-  <span class="help-block" id="name-help">By entering a full name, you and other users will see it displayed in the app instead of your email address.</span>
+<div>By entering a full name, you and other users will see it displayed in the app instead of your email address.</div>
+<%= form_for(@user, html: {id: "user"}) do |f| %>
   <%= f.label :name, "Full Name:" %>
   <%= f.text_field :name %>
-  <%= f.submit "Update Settings", class: "btn btn-primary" %>
+  <br />
+  <%= f.submit "Update Settings" %>
 <% end %>
