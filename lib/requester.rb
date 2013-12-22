@@ -4,7 +4,7 @@ module Requester
   extend HTTParty
 
   def get(uri_string)
-    response = HTTParty.get(uri_string, timeout: 5)
+    response = HTTParty.get(uri_string, timeout: 5, ssl_version: "SSLv3")
     if response.success?
       JSON.parse response.body
     else
