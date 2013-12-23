@@ -40,7 +40,7 @@
     </td>
   </tr>
 </table>
-<% if @web_application.versions.any? %>
+<% if @web_application.versions.size > 1 %>
   <table id="app-status-list">
     <tr>
       <th id="status_log" colspan="2">Status Log</th>
@@ -50,11 +50,13 @@
       <th>Occured</th>
     </tr>
     <% @web_application.versions.order("id DESC").limit(10).each do |version| %>
-      <% version_hash = YAML.load(version.object) %>
-      <tr>
-        <td class="status"><%= version_hash["current_status"] %></td>
-        <td><%= time_ago_in_words(version_hash["updated_at"]) %> ago</td>
-      </tr>
+      <% if version.object.present? %>
+        <% version_hash = YAML.load(version.object) %>
+        <tr>
+          <td class="status"><%= version_hash["current_status"] %></td>
+          <td><%= time_ago_in_words(version_hash["updated_at"]) %> ago</td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>
