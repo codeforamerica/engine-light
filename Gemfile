@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -19,8 +19,7 @@ gem 'turbolinks'
 gem 'pg'
 gem 'paper_trail', '~> 3.0.0'
 
-# Released version is not compatible with rails 4, so have to pull from github :/
-gem 'friendly_id', github: 'norman/friendly_id'
+gem 'friendly_id'
 gem 'will_paginate-bootstrap'
 gem 'httparty'
 
