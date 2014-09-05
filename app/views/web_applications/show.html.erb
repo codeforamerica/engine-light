@@ -49,7 +49,7 @@
       <th class="status">Status</th>
       <th>Occured</th>
     </tr>
-    <% @web_application.versions.order("id DESC").limit(10).each do |version| %>
+    <% @most_recent_versions.each do |version| %>
       <% if version.object.present? %>
         <% version_hash = YAML.load(version.object) %>
         <tr>

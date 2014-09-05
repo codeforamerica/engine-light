@@ -8,6 +8,9 @@ class WebApplicationsController < ApplicationController
     @web_application = WebApplication.friendly.find(params[:id])
     @web_application.get_current_status
     @web_application.save
+    # Paper Trail attaches a default order to versions, we need to override it
+    @most_recent_versions = @web_application.versions.reorder("created_at DESC").limit(10)
+
   end
 
   def index
