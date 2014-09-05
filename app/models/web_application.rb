@@ -21,7 +21,7 @@ class WebApplication < ActiveRecord::Base
       @status_checked_at = Time.now.utc
       return
     end
-    self.current_status = response.try(:[], "status")
+    self.current_status = response.try(:[], "status").try(:downcase)
 
     @status_checked_at = Time.at(response.try(:[], "updated").to_i).utc
     @resources = response.try(:[], "resources")

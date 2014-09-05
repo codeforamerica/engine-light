@@ -3,7 +3,7 @@ require 'spec_helper'
 describe WebApplication do
   let(:status_url)        { "http://www.codeforamerica.org/.well-known/status" } 
   let(:web_application)   { FactoryGirl.build(:web_application_with_user, status_url: status_url) }
-  let(:valid_body_string) { "{\"status\":\"ok\",\"updated\":1379539549,\"dependencies\":[\"Akismet\",\"Scribd\"],\"resources\":{\"Sendgrid\":6.545}}" } 
+  let(:valid_body_string) { "{\"status\":\"OK\",\"updated\":1379539549,\"dependencies\":[\"Akismet\",\"Scribd\"],\"resources\":{\"Sendgrid\":6.545}}" }
   before                  { FakeWeb.register_uri(:get, status_url, body: valid_body_string) }
 
   describe "#get_current_status!" do
