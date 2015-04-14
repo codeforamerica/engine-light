@@ -3,6 +3,10 @@ Engine Light
 
 ### Simple dashboard for Code for America apps ###
 
+See it [live at engine-light.codeforamerica.org](http://engine-light.codeforamerica.org).
+
+![Engine Light screen shot](screenshot.png)
+
 Uses Mozilla Persona to handle login. The app will only allow users with CfA email addresses to login successfully
 
 ### Links to existing status endpoint implementations
