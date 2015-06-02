@@ -4,11 +4,14 @@
   <div id="container">
     <div id="labels">
       <%= f.label :name, "Web Application Name:" %><br/>
-      <%= f.label :status_url, "Status Url:" %>
+      <%= f.label :status_url, "Status Url:" %><br />
+      <%= f.label :slack_channels, "Slack Channels:"%><br />
+      <small>(optional, comma separated list)</small>
     </div>
     <div id="inputs">
       <%= f.text_field :name %><br/>
-      <%= f.text_field :status_url, placeholder: "http://www.foo.com/.well-known/status" %>
+      <%= f.text_field :status_url, placeholder: "http://www.foo.com/.well-known/status" %><br />
+      <%= f.text_field :slack_channels, value: @web_application.slack_channels.join(',') %>
     </div>
     <div id="errors">
       <p><%= name_errors %></p>
