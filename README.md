@@ -11,6 +11,9 @@ Uses Mozilla Persona to handle login. The app will only allow users with CfA ema
 
 ### Links to existing status endpoint implementations
 
+#### Node.js
+- [node-engine-light](https://github.com/jeremiak/node-engine-light) (middleware module)
+
 #### Python
 - [RecordTrac](https://github.com/codeforamerica/recordtrac/blob/master/public_records_portal/views.py) (search for "well_known_status")
 - [BizFriendly API](https://github.com/codeforamerica/bizfriendly-api/blob/master/bizfriendly/routes.py) (search for "well-known")
