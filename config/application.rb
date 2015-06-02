@@ -29,5 +29,8 @@ module EngineLight
     config.assets.initialize_on_precompile = false
     config.assets.paths << Rails.root.join('app','assets', 'fonts')
     config.assets.precompile += %w( .svg .eot .woff .ttf)
+
+    # set the slack token from the environment
+    config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
   end
 end

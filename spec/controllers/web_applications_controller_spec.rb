@@ -116,6 +116,7 @@ describe WebApplicationsController do
     let(:current_user) { FactoryGirl.create(:user) }
     let(:params)       { {"web_application" => {"name" => "Test Web App",
                                                 "status_url" => "http://www.example.com/status",
+                                                "slack_channels" => "foo,",
                                                 "user" => {"emails" => [current_user.email]}}} }
     before { controller.stub(:current_user).and_return(current_user) }
 
@@ -141,7 +142,7 @@ describe WebApplicationsController do
     it "renders the new page when no users are added to the app" do
       status_url = "http://www.example.com/status"
       post :create, {"web_application" => {"name" => "Test Web App", "status_url" => status_url,
-                                           "user" => {"emails" => [""]}}}
+                                           "user" => {"emails" => [""]}, "slack_channels" => "foo,"}}
       response.should render_template(:new)
     end
 
@@ -155,6 +156,11 @@ describe WebApplicationsController do
       post :create, params
       response.should render_template(:new)
     end
+
+    it "fixes slack channel names to autoinclude hashes" do
+      post :create, params
+      WebApplication.find_by_name("Test Web App").slack_channels.should == ["#foo"]
+    end
   end
 
   describe "#update" do
@@ -163,8 +169,9 @@ describe WebApplicationsController do
     let(:web_application) { FactoryGirl.create(:web_application_with_user, status_url: status_url,
                                                name: "Test Application") }
     let(:current_user)    { web_application.users.first }
-    let(:params)          { {"web_application" => {"name" => "Meow Test Web App", 
+    let(:params)          { {"web_application" => {"name" => "Meow Test Web App",
                                                    "status_url" => new_status_url,
+                                                   "slack_channels" => "foo,",
                                                    "user" => {"emails" => [current_user.email]}},
                                                    "id" => web_application.slug} }
 
@@ -184,6 +191,12 @@ describe WebApplicationsController do
       users_hash = {"web_application" => {"user" => {"emails" => [current_user.email, another_user.email]}}}
       put :update, params.deep_merge(users_hash)
       web_application.reload.users.should == [current_user, another_user]
+    end
+
+    it "updates a web application to have more than one channel" do
+      more_slack = {"web_application" => {"slack_channels" => "foo,bar"}}
+      put :update, params.deep_merge(more_slack)
+      web_application.reload.slack_channels.should == ["#foo", "#bar"]
     end
 
     it "does not re-assign a user to the web application" do

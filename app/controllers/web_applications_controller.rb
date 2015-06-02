@@ -30,6 +30,7 @@ class WebApplicationsController < ApplicationController
   def create
     @current_user = current_user
     user = params["web_application"].delete("user")
+    slack_channels = parse_slack_channels(params["web_application"].delete("slack_channels"))
     @web_application = WebApplication.new(web_application_params)
     if user.present?
       user["emails"].each do |email|
@@ -37,6 +38,9 @@ class WebApplicationsController < ApplicationController
           @web_application.users << User.find_by_email(email)
         end
       end
+    end
+    if slack_channels.present?
+      @web_application.slack_channels = slack_channels
     end
 
     @web_application.get_current_status
@@ -55,8 +59,10 @@ class WebApplicationsController < ApplicationController
   def update
     @web_application = WebApplication.friendly.find(params[:id])
     user = params["web_application"].delete("user")
+    slack_channels = parse_slack_channels(params["web_application"].delete("slack_channels"))
 
     web_application_users = []
+    web_application_slack_channels = []
 
     if user.present?
       user["emails"].each do |email|
@@ -65,7 +71,12 @@ class WebApplicationsController < ApplicationController
         end
       end
     end
+    if slack_channels.present?
+      web_application_slack_channels = slack_channels
+    end
+
     @web_application.users = web_application_users
+    @web_application.slack_channels = web_application_slack_channels
     @web_application.attributes = web_application_params
     @web_application.get_current_status
 
@@ -96,6 +107,23 @@ class WebApplicationsController < ApplicationController
       end
     rescue ActiveRecord::RecordNotFound
       raise_not_found
+    end
+  end
+
+  def parse_slack_channels(slack_channels)
+    if slack_channels.blank?
+      return ""
+    else
+      channels = slack_channels.split(",")
+      parsed_channels = []
+      channels.each do |channel|
+        if channel.start_with? == "#"
+          parsed_channels << channel
+        else
+          parsed_channels << "#" + channel
+        end
+      end
+      return JSON.dump(parsed_channels)
     end
   end
 

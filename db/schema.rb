@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213214733) do
+ActiveRecord::Schema.define(version: 20150601233453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20131213214733) do
     t.string   "slug"
     t.datetime "last_downtime_notification_at"
     t.string   "current_status"
+    t.json     "slack_channels"
   end
 
   add_index "web_applications", ["name"], name: "index_web_applications_on_name", using: :btree

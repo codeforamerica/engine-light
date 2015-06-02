@@ -42,4 +42,5 @@ private
       errors.add(:status_url, "is unavailable or does not return a valid response")
     end
   end
+
 end
